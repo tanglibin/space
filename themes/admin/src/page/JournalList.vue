@@ -81,13 +81,7 @@ export default {
         },
         //翻页
         pageChange(){
-            Common.sendRequest({
-                type: '',
-                url: 'getUserList.do',
-                success: (result) => {
-                    this.list = result;
-                }
-            });
+            
         },
         //新增
         add(){
