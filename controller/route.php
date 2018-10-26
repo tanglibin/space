@@ -26,4 +26,7 @@ return [
 
     //获取分类标签
     'getCategoryList$'      => 'action/action/getCategoryList',
+
+    //获取日志概要列表
+    'getJournalList$'       => 'action/action/getJournalList',
 ];

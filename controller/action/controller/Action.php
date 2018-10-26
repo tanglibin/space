@@ -5,6 +5,7 @@ use tlb\common\controller\Base;
 use tlb\action\module\User;
 use tlb\action\module\Ak;
 use tlb\action\module\Category;
+use tlb\action\module\Journal;
 use think\Db;
 class Action extends Base
 {
@@ -32,6 +33,7 @@ class Action extends Base
         $this->success(User::getInstance()->updateUserStatus(), '用户状态更新成功!');
     }
 
+
     /**********************************AK管理************************************************* */
     //创建AK
     public function createAk(){
@@ -50,9 +52,17 @@ class Action extends Base
         $this->success(Ak::getInstance()->getAkList());
     }
 
+
     /**********************************分类标签************************************************* */
     //获取分类标签数据
     public function getCategoryList(){
         $this->success(Category::getInstance()->getCategoryList());
+    }
+
+
+    /**********************************日志管理************************************************* */
+    //获取日志概要列表
+    public function getJournalList(){
+        $this->success(Journal::getInstance()->getJournalList());
     }
 }

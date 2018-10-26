@@ -25,13 +25,13 @@
                 <el-form-item label="发布时间">
                     <el-col :span="11">
                         <el-form-item prop="stardate">
-                            <el-date-picker v-model="searchData.start" type="date" placeholder="请选择开始日期"></el-date-picker>
+                            <el-date-picker v-model="searchData.start" type="date" placeholder="请选择开始日期" value-format="yyyy-MM-dd"></el-date-picker>
                         </el-form-item>
                     </el-col>
                     <el-col class="t-center" :span="2">-</el-col>
                     <el-col :span="11">
                         <el-form-item prop="enddate">
-                            <el-date-picker v-model="searchData.end" type="date" placeholder="请选择介绍日期"></el-date-picker>
+                            <el-date-picker v-model="searchData.end" type="date" placeholder="请选择介绍日期" value-format="yyyy-MM-dd"></el-date-picker>
                         </el-form-item>
                     </el-col>
                 </el-form-item>
@@ -54,6 +54,7 @@
                 </el-form-item>
             </el-form>
             <el-row type="flex" justify="end">
+                <el-button type="primary" size="warning" @click="searchData={}">重  置</el-button>
                 <el-button type="primary" size="medium" @click="searchSub">搜  索</el-button>
             </el-row>
         </el-dialog>
@@ -82,7 +83,7 @@ export default {
                     { validator: (rule, value, callback) => {
                         let start = this.searchData.start,
                             end = this.searchData.end;
-                        if((!start && end) || end <  start){
+                        if( (!start && end) || (start && end && new Date(end) < new Date(start) )){
                             return callback(new Error('结束时间不能小于开始时间'));
                         }else if(start && !end){
                             return callback(new Error('请选择结束日期'));
@@ -96,8 +97,7 @@ export default {
     methods:{
         //打开弹框
         showDialog(){
-            //清空数据和校验结果
-            this.searchData = {};
+            //校验结果
             this.$refs.searchform && this.$refs.searchform.resetFields();
             //显示弹框
             this.isShowDialog = true;
