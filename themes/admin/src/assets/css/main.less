@@ -1,0 +1,111 @@
+//导入变量定义模块
+@import 'define';
+
+html, body{height: 100%; width: 100%;font-size: @font2;color:@color6}
+html, body, ul, li, p{margin: 0;padding: 0;}
+
+i[class^='icon-']{
+    background-image: url('../img/icon.png');
+    display: block;
+}
+
+
+//头部
+.el-header{
+    &{
+        background-color: @color1;
+        line-height: 60px;
+    }
+    .icon-computer-logo{
+        background-position: -49px -6px;
+        .size(120px, 35px);
+    }
+    .user-skin{
+        font-size: @font3;
+        color: @color2;
+        cursor: pointer;
+    }
+    .icon-avatar{
+        .size(42px);
+        margin-left: 10px;
+    }
+}
+
+
+//菜单
+.el-aside{
+    background-color: @color3;
+    width: 250px!important;
+    padding-top: 16px;
+    .el-menu{
+        background-color: @color3;
+        border: none;
+    }
+    .el-menu-item:focus, .el-menu-item:hover, .el-menu-item.is-active{
+        background-color: @color1;
+        border-left-color: @color4;
+    }
+    .el-menu-item{
+        color: @color2;
+        padding-left: 26px!important;
+        border-left: 4px solid @color3;
+    }
+    i{
+        .size(16px);
+        float: left;
+        margin: 20px 8px 20px 0;
+        background-position-y: -42px;
+    }
+    .icon-ak{
+        background-position-x: -1px;
+    }
+    .icon-user{
+        background-position-x: -18px;
+    }
+    .icon-journal{
+        background-position-x: -35px;
+    }
+    .icon-push{
+        background-position-x: -52px;
+    }
+    .icon-download{
+        background-position-x: -70px;
+    }
+    .icon-propose{
+        background-position-x: -88px;
+    }
+}
+
+//内容区域
+.container {
+    background-color: @color5;
+
+    .el-breadcrumb{
+        padding-bottom: 18px;
+        border-bottom: 1px solid @color9;
+        margin-bottom: 12px;
+    }
+    .tool-bar{
+        margin-bottom: 12px;
+    }
+    .el-dialog__header{
+        border-bottom: 1px solid @color9;
+    }
+    .success{
+        color: @color10;
+    }
+    .danger{
+        color: @color11;
+    }
+    .omit{
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+    .el-date-editor.el-input{
+        width: 100%;
+    }
+    .t-center{
+        text-align: center;
+    }
+}
