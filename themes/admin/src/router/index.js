@@ -17,6 +17,8 @@ import Journal from '@/page/Journal'
 import JournalList from '@/page/JournalList'
 //日志管理-新增修改
 import JournalUpdate from '@/page/JournalUpdate'
+//微码管理
+import Microcode from '@/page/Microcode'
 //好文推荐
 import Push from '@/page/Push'
 //资源下载
@@ -27,28 +29,28 @@ import Propose from '@/page/Propose'
 
 Vue.use(Router)
 export default new Router({
-    routes: [
-        {
+    routes: [{
             path: '/',
-            component : Container,
-            redirect : '/home',
-            children : [
-                {path:'home', component: Home, name: "首页"},
-                {path:'ak', component: Ak, name: "AK管理"},
-                {path:'user', component: User, name: "用户管理"},
+            component: Container,
+            redirect: '/home',
+            children: [
+                { path: 'home', component: Home, name: "首页" },
+                { path: 'ak', component: Ak, name: "AK管理" },
+                { path: 'user', component: User, name: "用户管理" },
                 {
-                    path:'journal', 
+                    path: 'journal',
                     component: Journal,
-                    redirect : '/',
+                    redirect: '/',
                     children: [
-                        {path:'/', component: JournalList, name: "日志管理"},
-                        {path:'add', component: JournalUpdate, name: "新增日志"},
-                        {path:'edit', component: JournalUpdate, name: "编辑日志"}
+                        { path: '/', component: JournalList, name: "日志管理" },
+                        { path: 'add', component: JournalUpdate, name: "新增日志" },
+                        { path: 'edit', component: JournalUpdate, name: "编辑日志" }
                     ]
                 },
-                {path:'push', component: Push, name: "好文推荐"},
-                {path:'download', component: Download, name: "资源下载"},
-                {path:'propose', component: Propose, name: "建议反馈"}
+                { path: 'microcode', component: Microcode, name: "微码管理" },
+                { path: 'push', component: Push, name: "好文推荐" },
+                { path: 'download', component: Download, name: "资源下载" },
+                { path: 'propose', component: Propose, name: "建议反馈" }
             ]
         },
         {

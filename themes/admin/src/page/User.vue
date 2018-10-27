@@ -6,17 +6,17 @@
         <!-- 正文内容表格 -->
         <el-table :data="list" @selection-change="selChange" border style="width: 100%">
             <el-table-column type="selection" width="55" :selectable="checkSelectable"></el-table-column>
-            <el-table-column prop="username" label="用户名"></el-table-column>
-            <el-table-column prop="user_type" label="类型" width="100">
+            <el-table-column prop="username" label="用户名" min-width="120"></el-table-column>
+            <el-table-column prop="user_type" label="类型" min-width="100">
                 <template slot-scope="scope">{{scope.row.user_type == 1 ? '管理用户' : '普通用户'}}</template>
             </el-table-column>
-            <el-table-column prop="status" label="状态" width="100">
+            <el-table-column prop="status" label="状态" min-width="100">
                 <template slot-scope="scope">
                     <span v-if="scope.row.status == 1" class="success">正常</span>
                     <span v-else class="danger">禁用</span>
                 </template>
             </el-table-column>
-            <el-table-column prop="access_times" label="访问次数" width="100"></el-table-column>
+            <el-table-column prop="access_times" label="访问次数" min-width="80"></el-table-column>
             <el-table-column prop="last_login_time" label="最后登录时间" width="180"></el-table-column>
             <el-table-column prop="create_time" label="创建时间" width="180"></el-table-column>
             <el-table-column label="操作" width="220">
