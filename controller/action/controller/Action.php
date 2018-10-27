@@ -65,4 +65,12 @@ class Action extends Base
     public function getJournalList(){
         $this->success(Journal::getInstance()->getJournalList());
     }
+    //日志发布|下线
+    public function journalIssueToggle(){
+        $this->success(Journal::getInstance()->journalIssueToggle(), '日志发布状态更新成功!');
+    }
+    //删除日志
+    public function journalDel(){
+        $this->success(Journal::getInstance()->journalDel(), '日志删除成功!');
+    }
 }

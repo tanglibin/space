@@ -85,4 +85,36 @@ class Journal extends Base
         }
     }
 
+    //日志发布|下线
+    public function journalIssueToggle(){
+        if(request()->isPost()){
+            $data=input('post.');
+            $r=Db::name("article_info")->where(['id'=>$data['id']])->update(['status'=>$data['status']],false,true);
+            if($r){
+                return true;
+            }else{
+                return $this->error("日志发布状态更新失败！");
+            }
+        }
+    }
+
+    //删除日志
+    public function journalDel(){
+        if(request()->isPost()){
+            $ids = input('id/a');
+            $ids = implode(",",$ids) ;
+
+            //开启事务
+            DB::startTrans();
+            $r1=Db::name("article_info")->where(['id'=>array('in',$ids)])->delete();
+            $r2=Db::name("article_detail")->where(['info_id'=>array('in',$ids)])->delete();
+            if($r1 && $r2){
+                Db::commit();
+                return true;
+            }else{
+                Db::rollback();
+                return $this->error("删除失败！");
+            }
+        }
+    }
 }

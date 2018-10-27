@@ -29,4 +29,8 @@ return [
 
     //获取日志概要列表
     'getJournalList$'       => 'action/action/getJournalList',
+    //日志发布|下线
+    'journalIssueToggle$'   => 'action/action/journalIssueToggle',
+    //删除日志
+    'journalDel$'           => 'action/action/journalDel',
 ];

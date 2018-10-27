@@ -5,7 +5,7 @@
         
         <!-- 正文内容表格 -->
         <el-table :data="list" @selection-change="selChange" border style="width: 100%">
-            <el-table-column type="index" width="50" label=" " align="center"></el-table-column>
+            <el-table-column type="index" :index="getIndex" width="50" label=" " align="center"></el-table-column>
             <el-table-column type="selection" width="55"></el-table-column>
             <el-table-column prop="title" label="标题" :show-overflow-tooltip="true"></el-table-column>
             <el-table-column prop="article" label="概要" :show-overflow-tooltip="true"></el-table-column>
@@ -19,8 +19,8 @@
             </el-table-column>
             <el-table-column label="操作" width="180">
                 <template slot-scope="scope">
-                    <el-button type="text" size="small" @click="blockToggle(scope.row)" v-if="scope.row.status == 1" icon="el-icon-upload2">发布</el-button>
-                    <el-button type="text" size="small" @click="blockToggle(scope.row)" v-else icon="el-icon-download">下线</el-button>
+                    <el-button type="text" size="small" @click="issueToggle(scope.row)" v-if="scope.row.status == 1" icon="el-icon-upload2">发布</el-button>
+                    <el-button type="text" size="small" @click="issueToggle(scope.row)" v-else icon="el-icon-download">下线</el-button>
                     <el-button type="text" size="small" icon="el-icon-delete" @click="del(scope.row)">删除</el-button>
                     <el-button type="text" size="small" icon="el-icon-edit" @click="showDialog(scope.row)">编辑</el-button>
                 </template>
@@ -61,6 +61,10 @@ export default {
         selChange(datas){
             this.selRowsData = datas;
         },
+        //获取索引值
+        getIndex(index){
+            return (this.pager.page - 1) *10 + index + 1;
+        },
         //获取数据
         getList(param){
             let isRest = JSON.stringify(param) == '{}';
@@ -75,21 +79,29 @@ export default {
                 }
             });
         },
-        //过滤数据
-        search(searchParam){
-            alert("过滤数据>"+JSON.stringify(searchParam));
-        },
         //翻页
-        pageChange(){
-             
+        pageChange(page){
+             this.pager.page = page;
+             this.getList();
         },
-        //新增
-        add(){
-            this.$router.push('/journal/add');
-        },
-        //修改
-        update(){
-            this.$router.push('/journal/edit');
+        //发布|下线
+        issueToggle(rowData){
+            let msg = rowData.status == 1 ? '发布' : '下线';
+            let targetStatus = [,2,1][rowData.status];
+            Common.confirm(`此操作将${msg}该日志, 是否继续?`, ()=>{
+                //解禁或禁用操作
+                Common.sendRequest({
+                    url: 'issueToggle.do',
+                    type: 'POST',
+                    data: {
+                        id: rowData.id,
+                        status: targetStatus
+                    },
+                    success: (result) => {
+                        rowData.status = targetStatus;
+                    }
+                });
+            });
         },
         //删除
         del(rowData){
@@ -99,8 +111,28 @@ export default {
             }
             Common.confirm('此操作将删除选中数据, 是否继续?', ()=>{
                 //删除操作
-                alert("删除操作")
+                let ids = rowData.map(item=>item.id);
+                Common.sendRequest({
+                    url: 'journalDel.do',
+                    type: 'POST',
+                    data: {id: ids},
+                    success: (result) => {
+                        let pagerObj = this.pager;
+                        if(pagerObj.page == this.lastPage && Math.ceil( (pagerObj.total - rowData.length) / pagerObj.pageSize ) < this.lastPage){
+                            this.pager.page -= 1;
+                        }
+                        this.getList();
+                    }
+                });
             });
+        },
+        //新增
+        add(){
+            this.$router.push('/journal/add');
+        },
+        //修改
+        update(){
+            this.$router.push('/journal/edit');
         },
     },
     mounted() {
