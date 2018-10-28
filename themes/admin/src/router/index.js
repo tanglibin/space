@@ -44,7 +44,7 @@ export default new Router({
                     children: [
                         { path: '/', component: JournalList, name: "日志管理" },
                         { path: 'add', component: JournalUpdate, name: "新增日志" },
-                        { path: 'edit', component: JournalUpdate, name: "编辑日志" }
+                        { path: 'edit/:id', component: JournalUpdate, name: "编辑日志" }
                     ]
                 },
                 { path: 'microcode', component: Microcode, name: "微码管理" },

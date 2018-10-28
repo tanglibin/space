@@ -1,7 +1,7 @@
 <template>
     <div class="journal">
         <!-- 工具栏 -->
-        <Toolbar :search="true" @add="add" @del="del()" @search="getList"></Toolbar>
+        <Toolbar :search="true" @add="$router.push('/journal/add')" @del="del()" @search="getList"></Toolbar>
         
         <!-- 正文内容表格 -->
         <el-table :data="list" @selection-change="selChange" border style="width: 100%">
@@ -22,7 +22,7 @@
                     <el-button type="text" size="small" @click="issueToggle(scope.row)" v-if="scope.row.status == 1" icon="el-icon-upload2">发布</el-button>
                     <el-button type="text" size="small" @click="issueToggle(scope.row)" v-else icon="el-icon-download">下线</el-button>
                     <el-button type="text" size="small" icon="el-icon-delete" @click="del(scope.row)">删除</el-button>
-                    <el-button type="text" size="small" icon="el-icon-edit" @click="showDialog(scope.row)">编辑</el-button>
+                    <el-button type="text" size="small" icon="el-icon-edit" @click="update(scope.row)">编辑</el-button>
                 </template>
             </el-table-column>
         </el-table>
@@ -126,14 +126,10 @@ export default {
                 });
             });
         },
-        //新增
-        add(){
-            this.$router.push('/journal/add');
-        },
         //修改
-        update(){
-            this.$router.push('/journal/edit');
-        },
+        update(rowData){
+            this.$router.push('/journal/edit/'+rowData.id);
+        }
     },
     mounted() {
         this.getList();

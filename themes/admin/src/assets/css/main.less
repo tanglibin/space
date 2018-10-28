@@ -1,7 +1,7 @@
 //导入变量定义模块
 @import 'define';
 
-html, body{height: 100%; width: 100%;font-size: @font2;color:@color6}
+html, body{height: 100%; width: 100%;font-size: @font2;color:@color6;font-family:"Microsoft YaHei"}
 html, body, ul, li, p{margin: 0;padding: 0;}
 
 i[class^='icon-']{
@@ -105,7 +105,7 @@ i[class^='icon-']{
         text-overflow: ellipsis;
         white-space: nowrap;
     }
-    .el-date-editor.el-input{
+    .el-input, .el-select{
         width: 100%;
     }
     .t-center{
@@ -115,5 +115,20 @@ i[class^='icon-']{
         background-color: @color12;
         padding: 12px 15px 12px 5px;
         text-align: right;
+    }
+    .el-form input, .el-form textarea, .edui-editor-iframeholder{
+        background: @color13;
+    }
+    .form-wrap{
+        background-color: @color12;
+        padding: 30px 20px;
+        border: 1px solid @color9;
+    }
+    textarea{
+        resize: none;
+        font-family:"Microsoft YaHei";
+    }
+    .edui-default{
+        line-height: normal
     }
 }
