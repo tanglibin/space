@@ -22,7 +22,7 @@
                     <el-button type="text" size="small" @click="issueToggle(scope.row)" v-if="scope.row.status == 1" icon="el-icon-upload2">发布</el-button>
                     <el-button type="text" size="small" @click="issueToggle(scope.row)" v-else icon="el-icon-download">下线</el-button>
                     <el-button type="text" size="small" icon="el-icon-delete" @click="del(scope.row)">删除</el-button>
-                    <el-button type="text" size="small" icon="el-icon-edit" @click="update(scope.row)">编辑</el-button>
+                    <el-button type="text" size="small" icon="el-icon-edit" @click="update(scope.row)" v-if="scope.row.status == 1">编辑</el-button>
                 </template>
             </el-table-column>
         </el-table>
@@ -91,7 +91,7 @@ export default {
             Common.confirm(`此操作将${msg}该日志, 是否继续?`, ()=>{
                 //解禁或禁用操作
                 Common.sendRequest({
-                    url: 'issueToggle.do',
+                    url: 'journalIssueToggle.do',
                     type: 'POST',
                     data: {
                         id: rowData.id,

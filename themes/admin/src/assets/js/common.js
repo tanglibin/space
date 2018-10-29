@@ -14,11 +14,27 @@ const Common = {
             type: 'warning'
         }).then(callback).catch(() => {});
     },
+
     /**
      * 消息提示
-     * @Param msg {String} 消息内容
+     * 
      */
     message: (msg) => Vue.prototype.$message(msg),
+
+    /**
+     * 获取必填校验规则
+     * @Param obj {Object}
+     *      key: model 名称
+     *      value： 提示内容
+     * @return {Object}  Element 要求格式的校验规则
+     */
+    getRequiredRuls: (obj) => {
+        let response = {};
+        for(let key in obj){
+            response[key] = [{ required: true, message: obj[key].msg || obj[key], trigger: obj[key].type || 'blur' }];
+        }
+        return response;
+    },
 
     /**
      * 服务端请求
@@ -40,13 +56,13 @@ const Common = {
 
         //请求参数添加
         if(op.data){
+            var params = new URLSearchParams();
+            for (let key in op.data) {
+                params.append(key, op.data[key]);
+            }
             if(axiosParam.method == 'get'){
-                axiosParam.params = JSON.stringify(op.data);
+                axiosParam.params = params;
             }else{
-                var params = new URLSearchParams();
-                for (let key in op.data) {
-                    params.append(key, op.data[key]);
-                }
                 axiosParam.data = params;
             }
         }

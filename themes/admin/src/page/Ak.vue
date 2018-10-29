@@ -53,11 +53,11 @@ export default {
             dislogTitle: '', //弹框标题
             formData: {}, //表单数据对象
             curRowData: null, //缓存修改数据对象, 用于修改后直接页面更新
-            rules: {//校验规则
-                key: [{ required: true, message: '请输入key', trigger: 'blur' }],
-                value: [{ required: true, message: '请输入value', trigger: 'blur' }],
-                name: [{ required: true, message: '请输入名称', trigger: 'blur' }]
-            }
+            rules: Common.getRequiredRuls({//校验规则
+                key: '请输入key',
+                value: '请输入value',
+                name: '请输入名称'
+            })
         };
     },
     methods: {

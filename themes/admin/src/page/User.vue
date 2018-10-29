@@ -74,10 +74,10 @@ export default {
             addFormData: {}, //新增表单数据对象
             isShowEditDialog : false, //是否显示修改密码弹框
             editFormData : {}, //修改密码表单数据对象
-            rules: {//校验规则
-                username: [{ required: true, message: '请输入用户名', trigger: 'blur' }],
-                password: [{ required: true, message: '请输入密码', trigger: 'blur' }]
-            }
+            rules: Common.getRequiredRuls({//校验规则
+                username: '请输入用户名',
+                password: '请输入密码'
+            })
         };
     },
     methods: {

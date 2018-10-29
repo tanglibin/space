@@ -73,4 +73,8 @@ class Action extends Base
     public function journalDel(){
         $this->success(Journal::getInstance()->journalDel(), '日志删除成功!');
     }
+    //根据id获取日志具体内容
+    public function getJournalById(){
+        $this->success(Journal::getInstance()->getJournalById());
+    }
 }

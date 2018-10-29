@@ -105,7 +105,7 @@ class Journal extends Base
             $ids = implode(",",$ids) ;
 
             //开启事务
-            DB::startTrans();
+            Db::startTrans();
             $r1=Db::name("article_info")->where(['id'=>array('in',$ids)])->delete();
             $r2=Db::name("article_detail")->where(['info_id'=>array('in',$ids)])->delete();
             if($r1 && $r2){
@@ -116,5 +116,16 @@ class Journal extends Base
                 return $this->error("删除失败！");
             }
         }
+    }
+
+    //根据id获取日志具体内容
+    public function getJournalById(){
+        $id = input('get.id');
+        $article = Db::name('article_info')->where(['id' => $id]) -> find();
+        //tlb_article_detail
+        $detail = Db::query('select t.id,t.chapter_title, case t.rowNo when 1 then t.content else '' end content from (
+            select b.id, b.name,b.content (@rowNum:=@rowNum+1) rowNo  from a ,b, (Select (@rowNum :=0) )c 
+            where a.id = b.id  order by create_time)t');
+        return $id;
     }
 }

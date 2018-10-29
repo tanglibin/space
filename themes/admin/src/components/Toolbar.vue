@@ -54,7 +54,7 @@
                 </el-form-item>
             </el-form>
             <el-row type="flex" justify="end">
-                <el-button type="primary" size="warning" @click="searchData={}">重  置</el-button>
+                <el-button type="warning" size="medium" @click="searchData={}">重  置</el-button>
                 <el-button type="primary" size="medium" @click="searchSub">搜  索</el-button>
             </el-row>
         </el-dialog>

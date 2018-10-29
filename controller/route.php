@@ -33,4 +33,6 @@ return [
     'journalIssueToggle$'   => 'action/action/journalIssueToggle',
     //删除日志
     'journalDel$'           => 'action/action/journalDel',
+    //根据id获取日志具体内容
+    'getJournalById$'       => 'action/action/getJournalById'
 ];

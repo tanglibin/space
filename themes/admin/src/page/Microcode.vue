@@ -59,11 +59,7 @@ export default {
             isShowDialog: false, //是否显示弹框
             dislogTitle: '', //弹框标题
             formData: {}, //表单数据对象
-            rules: {//校验规则
-                key: [{ required: true, message: '请输入key', trigger: 'blur' }],
-                value: [{ required: true, message: '请输入value', trigger: 'blur' }],
-                name: [{ required: true, message: '请输入名称', trigger: 'blur' }]
-            }
+            
         };
     },
     methods: {
