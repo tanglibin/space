@@ -121,11 +121,12 @@ class Journal extends Base
     //根据id获取日志具体内容
     public function getJournalById(){
         $id = input('get.id');
-        $article = Db::name('article_info')->where(['id' => $id]) -> find();
-        //tlb_article_detail
-        $detail = Db::query('select t.id,t.chapter_title, case t.rowNo when 1 then t.content else '' end content from (
-            select b.id, b.name,b.content (@rowNum:=@rowNum+1) rowNo  from a ,b, (Select (@rowNum :=0) )c 
-            where a.id = b.id  order by create_time)t');
-        return $id;
+        $article = Db::name('article_info')->where(['id' => $id, 'status' => 1]) -> find();
+        if(!$article){
+            return $this->error("非法请求！");
+        }
+        $detail = Db::name('article_detail')->where(['info_id' => $id]) -> select();
+        $article['detail'] = $detail;
+        return $article;
     }
 }

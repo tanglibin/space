@@ -28,7 +28,7 @@ new Vue({
         }
     },
     mounted() {
-        console.log('%c联系邮箱%ctony@tanglibin.com', this.getStyle(), this.getStyle('#fadfa3', '#333'));
-        console.log('%c网站地址%chttps://www.tanglibin.com', this.getStyle(), this.getStyle('#fadfa3', '#333'));
+        console.log('%c联系邮箱%ctony@tlbin.com', this.getStyle(), this.getStyle('#fadfa3', '#333'));
+        console.log('%c网站地址%chttps://www.tlbin.com, https://www.c3tt.com', this.getStyle(), this.getStyle('#fadfa3', '#333'));
     },
 })

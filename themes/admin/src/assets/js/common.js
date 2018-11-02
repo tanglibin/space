@@ -81,6 +81,7 @@ const Common = {
             op.success(data);
         }).catch((msg='网络异常，请稍后再试~！') =>{
             Common.message(msg);
+            op.error && op.error();
         });
     }
 };

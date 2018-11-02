@@ -6,7 +6,7 @@
         <!-- 正文内容表格 -->
         <el-table :data="list" @selection-change="selChange" border style="width: 100%">
             <el-table-column type="index" :index="getIndex" width="50" label=" " align="center"></el-table-column>
-            <el-table-column type="selection" width="55"></el-table-column>
+            <el-table-column type="selection" width="40" align="center"></el-table-column>
             <el-table-column prop="title" label="标题" :show-overflow-tooltip="true"></el-table-column>
             <el-table-column prop="article" label="概要" :show-overflow-tooltip="true"></el-table-column>
             <el-table-column prop="category_name" label="标签" width="100"></el-table-column>

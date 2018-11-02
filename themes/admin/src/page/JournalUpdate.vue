@@ -62,7 +62,7 @@ export default {
     components: {VueUeditorWrap},
     data() {
         return {
-            formData: {content: '', chapter_title: []},// 表单对象
+            formData: {content: '', chapter_title: ''},// 表单对象
             rules: Common.getRequiredRuls({//校验规则
                 title: '请输入标题',
                 article: '请输入概要',
@@ -134,15 +134,19 @@ export default {
 
         //编辑状态获取数据
         let editId = this.$route.params.id;
-        if(editId){
-            Common.sendRequest({
-                url: 'getJournalById.do',
-                data: {id: editId},
-                success: (result) => {
-                    console.log(JSON.stringify(result));
-                }
-            });
-        }
+       // this.formData = {"id":2,"category_id":2,"title":"标题2标题2标题2标题2标题2","article":"概要2概要2概要2概要2概要2概要2概要2概要2概要2概要2概要2概要2概要2","type":"1","issue_time":"2018-10-25 22:16:06","create_time":"2018-10-25 22:16:06","status":"1","detail":[{"id":2,"info_id":2,"chapter_title":null,"content":"内容2\n内容2内容2内容2内容2内容2内容2内容2内容2内容2内容2内容2内容2内容2内容2内容2内容2内容2内容2内容2内容2内容2内容2内容2内容2内容2内容2内容2内容2内容2内容2内容2内容2内容2内容2内容2内容2内容2内容2内容2内容2内容2内容2内容2内容2内容2内容2内容2内容2内容2内容2内容2内容2内容2内容2内容2内容2内容2内容2内容2内容2内容2内容2内容2\n"}]};
+        // if(editId){
+        //     Common.sendRequest({
+        //         url: 'getJournalById.do',
+        //         data: {id: editId},
+        //         success: (result) => {
+        //             this.formData = result;
+        //         },
+        //         error: ()=> {
+        //             this.$router.go(-1);
+        //         }
+        //     });
+        // }
     },
 };
 </script>
