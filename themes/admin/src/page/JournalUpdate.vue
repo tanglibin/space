@@ -105,12 +105,10 @@ export default {
     methods: {
         //获取标签分类
         getCategory(){
-            Common.sendRequest({
-                url: 'getCategoryList.do',
-                success: (result) => {
-                    this.categoryList = result;
-                }
-            });
+            //请求分类标签数据
+            Common.getCategoryList().then((list)=>{
+                this.categoryList = list;
+            })
         },
         //重置表单
         resetForm(){

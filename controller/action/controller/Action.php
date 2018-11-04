@@ -6,6 +6,7 @@ use tlb\action\module\User;
 use tlb\action\module\Ak;
 use tlb\action\module\Category;
 use tlb\action\module\Journal;
+use tlb\action\module\Push;
 use think\Db;
 class Action extends Base
 {
@@ -77,4 +78,29 @@ class Action extends Base
     public function getJournalById(){
         $this->success(Journal::getInstance()->getJournalById());
     }
+
+
+    /**********************************好文推荐************************************************* */
+    //获取好文推荐列表
+    public function getPushList(){
+        $this->success(Push::getInstance()->getPushList());
+    }
+    //好文发布|下线
+    public function pushIssueToggle(){
+        $this->success(Push::getInstance()->pushIssueToggle(), '推荐发布状态更新成功!');
+    }
+    //删除推荐
+    public function pushDel(){
+        $this->success(Push::getInstance()->pushDel(), '推荐删除成功!');
+    }
+    //创建推荐
+    public function createPush(){
+        $this->success(Push::getInstance()->createPush(), '新增成功!');
+    }
+    //修改推荐
+    public function updatePush(){
+        $this->success(Push::getInstance()->updatePush(), '修改成功!');
+    }
+    
+    
 }

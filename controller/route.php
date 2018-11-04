@@ -34,5 +34,16 @@ return [
     //删除日志
     'journalDel$'           => 'action/action/journalDel',
     //根据id获取日志具体内容
-    'getJournalById$'       => 'action/action/getJournalById'
+    'getJournalById$'       => 'action/action/getJournalById',
+
+    //获取好文推荐列表
+    'getPushList$'          => 'action/action/getPushList',
+    //好文发布|下线
+    'pushIssueToggle$'      => 'action/action/pushIssueToggle',
+    //好文推荐删除
+    'pushDel$'              => 'action/action/pushDel',
+    //新增推荐
+    'createPush$'           => 'action/action/createPush',
+    //修改推荐内容
+    'updatePush$'           => 'action/action/updatePush'
 ];

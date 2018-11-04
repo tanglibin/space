@@ -105,12 +105,10 @@ export default {
             //请求分类标签数据
             if(!this.requestEd){
                 this.requestEd = true;
-                Common.sendRequest({
-                    url: 'getCategoryList.do',
-                    success: (result) => {
-                        this.categoryList = result;
-                    }
-                });
+                //请求分类标签数据
+                Common.getCategoryList().then((list)=>{
+                    this.categoryList = list;
+                })
             }
         },
         //搜索

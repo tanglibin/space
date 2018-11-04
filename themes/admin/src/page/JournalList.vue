@@ -9,7 +9,7 @@
             <el-table-column type="selection" width="40" align="center"></el-table-column>
             <el-table-column prop="title" label="标题" :show-overflow-tooltip="true"></el-table-column>
             <el-table-column prop="article" label="概要" :show-overflow-tooltip="true"></el-table-column>
-            <el-table-column prop="category_name" label="标签" width="100"></el-table-column>
+            <el-table-column prop="category_name" label="标签" width="100" align="center"></el-table-column>
             <el-table-column prop="issue_time" label="发布时间" width="160"></el-table-column>
             <el-table-column prop="status" label="状态" width="80">
                 <template slot-scope="scope">
@@ -26,8 +26,7 @@
                 </template>
             </el-table-column>
         </el-table>
-        <el-pagination v-if="lastPage>1" @current-change="pageChange" :current-page.sync="pager.page" :page-size="pager.pageSize" :total="pager.total" layout="prev, pager, next, jumper">
-    </el-pagination>
+        <el-pagination v-if="lastPage>1" @current-change="pageChange" :current-page.sync="pager.page" :page-size="pager.pageSize" :total="pager.total" layout="prev, pager, next, jumper"></el-pagination>
     </div>
 </template>
 

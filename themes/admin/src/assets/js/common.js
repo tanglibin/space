@@ -83,6 +83,18 @@ const Common = {
             Common.message(msg);
             op.error && op.error();
         });
+    },
+
+    /**
+     * 获取分类标签数据
+    */
+    getCategoryList: () => {
+        return new Promise((resolve)=>{
+            Common.sendRequest({
+                url: 'getCategoryList.do',
+                success: resolve
+            });
+        });
     }
 };
 
