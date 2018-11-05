@@ -1,5 +1,5 @@
 // 所需Element-ui 的组件配置
-import { Container, Header, Aside, Main, Menu, MenuItem, Message, MessageBox, Row, Table, TableColumn, Button, Breadcrumb, BreadcrumbItem, Form, FormItem, Dialog, Input, Select, Option, Loading, Col, DatePicker, Pagination} from 'element-ui'
+import { Container, Header, Aside, Main, Menu, MenuItem, Message, MessageBox, Row, Table, TableColumn, Button, Breadcrumb, BreadcrumbItem, Form, FormItem, Dialog, Input, Select, Option, Loading, Col, DatePicker, Pagination, Upload} from 'element-ui'
 const element = {
     install: function (Vue) {
         Vue.use(Container)//外层容器
@@ -23,6 +23,7 @@ const element = {
         Vue.use(Col)//流布局
         Vue.use(DatePicker)//日期控件
         Vue.use(Pagination)//分页控件
+        Vue.use(Upload)//上传控件
         
         //Loading
         Vue.prototype.$loading = Loading;
