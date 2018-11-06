@@ -45,5 +45,14 @@ return [
     //新增推荐
     'createPush$'           => 'action/action/createPush',
     //修改推荐内容
-    'updatePush$'           => 'action/action/updatePush'
+    'updatePush$'           => 'action/action/updatePush',
+
+    //获取资源列表
+    'getDownList$'          => 'action/action/getDownList',
+    //新增资源信息
+    'createDown$'           => 'action/action/createDown',
+    //修改资源信息
+    'updateDown$'           => 'action/action/updateDown',
+    //删除资源
+    'delDown$'              => 'action/action/delDown',
 ];

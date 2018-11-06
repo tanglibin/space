@@ -7,6 +7,7 @@ use tlb\action\module\Ak;
 use tlb\action\module\Category;
 use tlb\action\module\Journal;
 use tlb\action\module\Push;
+use tlb\action\module\Download;
 use think\Db;
 class Action extends Base
 {
@@ -102,5 +103,21 @@ class Action extends Base
         $this->success(Push::getInstance()->updatePush(), '修改成功!');
     }
     
-    
+    /**********************************资源下载管理************************************************* */
+    //创建资源信息
+    public function createDown(){
+        $this->success(Download::getInstance()->createDown(), '新增成功!');
+    }
+    //删除资源
+    public function delDown(){
+        $this->success(Download::getInstance()->delDown(), '删除成功!');
+    }
+    //修改资源信息
+    public function updateDown(){
+        $this->success(Download::getInstance()->updateDown(), '修改成功!');
+    }
+    //查询资源信息数据集合
+    public function getDownList(){
+        $this->success(Download::getInstance()->getDownList());
+    }
 }
