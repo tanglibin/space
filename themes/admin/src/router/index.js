@@ -11,6 +11,8 @@ import Home from '@/page/Home'
 import Ak from '@/page/Ak'
 //用户管理
 import User from '@/page/User'
+//标签管理
+import Tag from '@/page/Tag'
 //日志管理-入口
 import Journal from '@/page/Journal'
 //日志管理-数据展示
@@ -23,8 +25,6 @@ import Microcode from '@/page/Microcode'
 import Push from '@/page/Push'
 //资源下载
 import Download from '@/page/Download'
-//建议反馈
-import Propose from '@/page/Propose'
 
 
 Vue.use(Router)
@@ -37,6 +37,7 @@ export default new Router({
                 { path: 'home', component: Home, name: "首页" },
                 { path: 'ak', component: Ak, name: "AK管理" },
                 { path: 'user', component: User, name: "用户管理" },
+                { path: 'tag', component: Tag, name: "标签管理" },
                 {
                     path: 'journal',
                     component: Journal,
@@ -49,8 +50,7 @@ export default new Router({
                 },
                 { path: 'microcode', component: Microcode, name: "微码管理" },
                 { path: 'push', component: Push, name: "好文推荐" },
-                { path: 'download', component: Download, name: "资源下载" },
-                { path: 'propose', component: Propose, name: "建议反馈" }
+                { path: 'download', component: Download, name: "资源下载" }
             ]
         },
         {
