@@ -53,13 +53,12 @@ class Download extends Base
     public function updateDown(){
         if(request()->isPost()){
             $data=input('post.');
-            if($this->validAk($data)){
-                $r=Db::name("ak")->update($data);
-                if($r){
-                    return true;
-                }else{
-                    return $this->error("修改失败！");
-                }
+            $data['last_update_time'] = date("Y-m-d H:i:s");
+            $r=Db::name("file_downlod")->update($data);
+            if($r){
+                return $data['last_update_time'];
+            }else{
+                return $this->error("修改失败！");
             }
         }
     }

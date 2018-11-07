@@ -7,11 +7,27 @@
         <el-table :data="list" @selection-change="selChange" border style="width: 100%">
             <el-table-column type="selection" width="55"></el-table-column>
             <el-table-column prop="name" label="名称" min-width="100"></el-table-column>
-            <el-table-column prop="logo_name" label="图标" min-width="100"></el-table-column>
-            <el-table-column prop="file_name" label="文件" min-width="100"></el-table-column>
+            <el-table-column prop="logo_name" label="图标" min-width="100">
+                <template slot-scope="scope">
+                    <el-upload :show-file-list="false" :on-success="uploaded" :action="`/themes/admin/dist/static/Upload/controller.php?id=${scope.row.id}&filename=${scope.row.logo_name}`">
+                        <el-button size="small" type="primary">{{scope.row.logo_name || '上传图标'}}</el-button>
+                    </el-upload>
+                </template>
+            </el-table-column>
+            <el-table-column prop="file_name" label="文件" min-width="100">
+                <template slot-scope="scope">
+                    <el-upload :show-file-list="false" :on-success="uploaded" :action="`/themes/admin/dist/static/Upload/controller.php?id=${scope.row.id}&filename=${scope.row.file_name}`">
+                        <el-button size="small" type="primary">{{scope.row.file_name || '上传文件'}}</el-button>
+                    </el-upload>
+                </template>
+            </el-table-column>
             <el-table-column prop="version" label="版本" min-width="60"></el-table-column>
-            <el-table-column prop="size" label="大小" min-width="60"></el-table-column>
-            <el-table-column prop="url" label="外部地址" min-width="200"></el-table-column>
+            <el-table-column prop="size" label="大小" min-width="100"></el-table-column>
+            <el-table-column prop="url" label="外部地址" :show-overflow-tooltip="true" min-width="200">
+                <template slot-scope="scope">
+                    <a class="link" :href="scope.row.url" target="_blank">{{scope.row.url}}</a>
+                </template>
+            </el-table-column>
             <el-table-column prop="last_update_time" label="最后更新时间" width="180"></el-table-column>
             <el-table-column label="操作" width="140">
                 <template slot-scope="scope">
@@ -30,7 +46,7 @@
                 <el-form-item label="版本" prop="version">
                     <el-input v-model="formData.version" placeholder="请输入版本"></el-input>
                 </el-form-item>
-                <el-form-item label="外部地址" prop="url">
+                <el-form-item label="外部地址">
                     <el-input v-model="formData.url" placeholder="请输入外部地址"></el-input>
                 </el-form-item>
             </el-form>
@@ -58,8 +74,7 @@ export default {
             curRowData: null, //缓存修改数据对象, 用于修改后直接页面更新
             rules: Common.getRequiredRuls({//校验规则
                 name: '请输入名称',
-                version: '请输入版本',
-                url: '请输入外部地址'
+                version: '请输入版本'
             })
       };
     },
@@ -67,6 +82,29 @@ export default {
         //选中回调
         selChange(datas){
             this.selRowsData = datas;
+        },
+        //文件大小单位转换
+        getSize(bytes){
+            if (bytes === 0) return '0b';
+            var k = 1024,
+                sizes = ['b', 'kb', 'mb'],
+                i = Math.floor(Math.log(bytes) / Math.log(k));
+            return Math.floor((bytes / Math.pow(k, i))*100)/100 + sizes[i];
+        },
+        //上传文件成功
+        uploaded(response, file, fileList){
+            let dataId = response.id,
+                isUpLogo = ['.png', '.jpg'].includes(response.type),
+                moduleName = isUpLogo ? 'logo_name' : 'file_name',
+                param = {id: dataId};
+
+            this.curRowData = this.list.find((item)=>{
+                return item.id == dataId;
+            });
+
+            !isUpLogo && (param.size = this.getSize(response.size));
+            param[moduleName] = response.title;
+            this.update(param);
         },
         //显示弹框
         showDialog(rowData){
@@ -100,13 +138,22 @@ export default {
             });
         },
         //修改
-        update(){
+        update(data){
+            if(!data){
+                let formData = this.formData;
+                data = {
+                    id: formData.id,
+                    name: formData.name,
+                    version: formData.version,
+                    url: formData.url
+                }
+            }
             Common.sendRequest({
                 url: 'updateDown.do',
                 type: 'POST',
-                data: this.formData,
+                data: data,
                 success: (result) => {
-                    Object.assign(this.curRowData, this.formData);
+                    Object.assign(this.curRowData, data, {last_update_time: result});
                     //关闭弹框
                     this.isShowDialog = false;
                 }

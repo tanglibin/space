@@ -48,12 +48,13 @@ class Uploader
      * 构造函数
      * @param string $fileField 表单名称
      * @param array $config 配置项
-     * @param bool $base64 是否解析base64编码，可省略。若开启，则$fileField代表的是base64编码的字符串表单名
+     * @param string $fileName 文件名称
      */
-    public function __construct($fileField, $config, $type = "upload")
+    public function __construct($fileField, $config, $fileName, $type = "upload")
     {
         $this->fileField = $fileField;
         $this->config = $config;
+        $this->fileName = $fileName;
         $this->type = $type;
         $this->upFile();
         $this->stateMap['ERROR_TYPE_NOT_ALLOWED'] = iconv('unicode', 'utf-8', $this->stateMap['ERROR_TYPE_NOT_ALLOWED']);
@@ -84,7 +85,7 @@ class Uploader
         $this->oriName = $file['name'];
         $this->fileSize = $file['size'];
         $this->fileType = $this->getFileExt();
-        $this->fullName = $this->config["pathFormat"];
+        $this->fullName = $this->getFullName();
         $this->filePath = $this->getFilePath();
         $this->fileName = $this->getFileName();
         $dirname = dirname($this->filePath);
@@ -136,6 +137,22 @@ class Uploader
     private function getFileExt()
     {
         return strtolower(strrchr($this->oriName, '.'));
+    }
+
+    /**
+     * 获取完整文件名
+     * @return string
+     */
+    private function getFullName()
+    {
+        $path = $this->config["pathFormat"];
+        $fileName = $this->fileName;
+
+        if($fileName == 'undefined' || $fileName == 'null' ){
+            $fileName = $this->oriName;
+        }
+
+        return $path . $fileName;
     }
 
     /**
