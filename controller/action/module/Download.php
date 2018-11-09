@@ -35,13 +35,22 @@ class Download extends Base
     //删除资源
     public function delDown(){
         if(request()->isPost()){
-            $ids = input('id/a');
+            $ids = input('ids/a');
             $ids = implode(",",$ids) ;
 
             $map['id']  = array('in',$ids);
             $r=Db::name("file_downlod")->where($map)->delete();
-            //还要删除文件
             if($r){
+                //删除文件
+                $files = input('files/a');
+                $path = $_SERVER['DOCUMENT_ROOT'] . '/upload/download/';
+                foreach ( $files as $item ) {
+                    if(!empty($item)){
+                        try{
+                            unlink($path . $item);
+                        }catch(Exception $e){}
+                    }
+                }
                 return true;
             }else{
                 return $this->error("删除失败！");

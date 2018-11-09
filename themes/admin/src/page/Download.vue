@@ -6,24 +6,25 @@
         <!-- 正文内容表格 -->
         <el-table :data="list" @selection-change="selChange" border style="width: 100%">
             <el-table-column type="selection" width="55"></el-table-column>
-            <el-table-column prop="name" label="名称" min-width="100"></el-table-column>
-            <el-table-column prop="logo_name" label="图标" min-width="100">
+            <el-table-column prop="name" label="名称" min-width="100" :show-overflow-tooltip="true"></el-table-column>
+            <el-table-column prop="logo_name" label="图标" width="80">
                 <template slot-scope="scope">
                     <el-upload :show-file-list="false" :on-success="uploaded" :action="`/themes/admin/dist/static/Upload/controller.php?id=${scope.row.id}&filename=${scope.row.logo_name}`">
-                        <el-button size="small" type="primary">{{scope.row.logo_name || '上传图标'}}</el-button>
+                        <i v-if="scope.row.logo_name" class='logo_name' :style="`background-image:url('/upload/download/${scope.row.logo_name + '?' + scope.row.imgRandom}')`"></i>
+                        <a class="link" v-else>上传图标</a>
                     </el-upload>
                 </template>
             </el-table-column>
             <el-table-column prop="file_name" label="文件" min-width="100">
                 <template slot-scope="scope">
                     <el-upload :show-file-list="false" :on-success="uploaded" :action="`/themes/admin/dist/static/Upload/controller.php?id=${scope.row.id}&filename=${scope.row.file_name}`">
-                        <el-button size="small" type="primary">{{scope.row.file_name || '上传文件'}}</el-button>
+                        <a class="link">{{scope.row.file_name || '上传文件'}}</a>
                     </el-upload>
                 </template>
             </el-table-column>
-            <el-table-column prop="version" label="版本" min-width="60"></el-table-column>
-            <el-table-column prop="size" label="大小" min-width="100"></el-table-column>
-            <el-table-column prop="url" label="外部地址" :show-overflow-tooltip="true" min-width="200">
+            <el-table-column prop="version" label="版本" min-width="80"></el-table-column>
+            <el-table-column prop="size" label="大小" min-width="90"></el-table-column>
+            <el-table-column prop="url" label="外部地址" min-width="220" :show-overflow-tooltip="true">
                 <template slot-scope="scope">
                     <a class="link" :href="scope.row.url" target="_blank">{{scope.row.url}}</a>
                 </template>
@@ -102,7 +103,7 @@ export default {
                 return item.id == dataId;
             });
 
-            !isUpLogo && (param.size = this.getSize(response.size));
+            isUpLogo ? (this.curRowData.imgRandom = +new Date()) : (param.size = this.getSize(response.size));
             param[moduleName] = response.title;
             this.update(param);
         },
@@ -141,6 +142,9 @@ export default {
         update(data){
             if(!data){
                 let formData = this.formData;
+                if(JSON.stringify(formData) == JSON.stringify(this.curRowData)){
+                    return Common.message("当前没有修改任何数据");
+                }
                 data = {
                     id: formData.id,
                     name: formData.name,
@@ -166,11 +170,16 @@ export default {
                 return Common.message("请选择要删除的数据");
             }
             Common.confirm('此操作将删除选中数据, 是否继续?', ()=>{
-                let ids = rowData.map(item=>item.id);
+                let ids = [], files = [];
+                rowData.forEach(item => {
+                    ids.push(item.id);
+                    item.logo_name && files.push(item.logo_name);
+                    item.file_name && files.push(item.file_name);
+                });
                 Common.sendRequest({
                     url: 'delDown.do',
                     type: 'POST',
-                    data: {id: ids},
+                    data: {ids: ids, files: files},
                     success: (result) => {
                         this.list = this.list.filter(item => !ids.includes(item.id));
                     }
