@@ -30,7 +30,7 @@ const Common = {
      */
     getRequiredRuls: (obj) => {
         let response = {};
-        for(let key in obj){
+        for (let key in obj) {
             response[key] = [{ required: true, message: obj[key].msg || obj[key], trigger: obj[key].type || 'blur' }];
         }
         return response;
@@ -40,14 +40,14 @@ const Common = {
      * 服务端请求
      * @param op {Object} 请求配置参数
      */
-    sendRequest:(op) => {
+    sendRequest: (op) => {
         let loading;
         let axiosParam = {
             url: op.url,
             method: op.type || 'get',
-            headers: {'X-Requested-With':'XMLHttpRequest'},
+            headers: { 'X-Requested-With': 'XMLHttpRequest' },
             //响应之前
-            transformResponse: [function (data) {
+            transformResponse: [function(data) {
                 // 对 data 进行任意转换处理
                 loading.close();
                 return data;
@@ -55,31 +55,31 @@ const Common = {
         }
 
         //请求参数添加
-        if(op.data){
+        if (op.data) {
             var params = new URLSearchParams();
             for (let key in op.data) {
                 params.append(key, op.data[key]);
             }
-            if(axiosParam.method == 'get'){
+            if (axiosParam.method == 'get') {
                 axiosParam.params = params;
-            }else{
+            } else {
                 axiosParam.data = params;
             }
         }
 
-        new Promise(function(resolve, reject){
+        new Promise(function(resolve, reject) {
             //显示loading
-            loading = Vue.prototype.$loading.service({background:"rgba(0,0,0,0.6)"});
+            loading = Vue.prototype.$loading.service({ background: "rgba(0,0,0,0.6)" });
             //请求发送
-            axios(axiosParam).then(result =>{
+            axios(axiosParam).then(result => {
                 result = JSON.parse(result.data);
                 result.status ? resolve(result) : reject(result.msg);
             }).catch(reject);
 
-        }).then(({data, msg})=>{
+        }).then(({ data, msg }) => {
             msg && Common.message(msg);
             op.success(data);
-        }).catch((msg='网络异常，请稍后再试~！') =>{
+        }).catch((msg = '网络异常，请稍后再试~！') => {
             Common.message(msg);
             op.error && op.error();
         });
@@ -87,11 +87,14 @@ const Common = {
 
     /**
      * 获取分类标签数据
-    */
-    getCategoryList: () => {
-        return new Promise((resolve)=>{
+     * @param simple {Boolean} 是否为简单模式， 简化模式只包含分类名称及id， 非简化模式则包含最后修改时间，日志、微码、好文等条目数
+     */
+    getCategoryList: (simple = true) => {
+        return new Promise((resolve) => {
+            let url = 'getCategoryList.do';
+            simple && (url += '?simple=true');
             Common.sendRequest({
-                url: 'getCategoryList.do',
+                url: url,
                 success: resolve
             });
         });
