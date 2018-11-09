@@ -83,12 +83,12 @@ i[class^='icon-']{
 .container {
     background-color: @color5;
 
+    .tool-bar{
+        margin-bottom: 12px;
+    }
     .el-breadcrumb{
         padding-bottom: 18px;
         border-bottom: 1px solid @color9;
-        margin-bottom: 12px;
-    }
-    .tool-bar{
         margin-bottom: 12px;
     }
     .el-dialog__header{
@@ -140,5 +140,8 @@ i[class^='icon-']{
         color: @color4;
         background: transparent;
         border: none;
+    }
+    .el-table th.gutter, .el-table colgroup.gutter{
+        display: table-cell!important;
     }
 }
