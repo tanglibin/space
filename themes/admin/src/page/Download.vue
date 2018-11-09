@@ -179,7 +179,7 @@ export default {
                 Common.sendRequest({
                     url: 'delDown.do',
                     type: 'POST',
-                    data: {ids: ids, files: files},
+                    data: {ids: ids, files: JSON.stringify(files)},
                     success: (result) => {
                         this.list = this.list.filter(item => !ids.includes(item.id));
                     }

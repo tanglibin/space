@@ -42,7 +42,9 @@ class Download extends Base
             $r=Db::name("file_downlod")->where($map)->delete();
             if($r){
                 //删除文件
-                $files = input('files/a');
+                $files = htmlspecialchars_decode( input('post.files') );
+                $files = json_decode($files, true);
+
                 $path = $_SERVER['DOCUMENT_ROOT'] . '/upload/download/';
                 foreach ( $files as $item ) {
                     if(!empty($item)){
