@@ -22,7 +22,7 @@
             <el-table-column label="操作" width="220">
                 <template slot-scope="scope">
                     <el-button type="text" size="small" icon="el-icon-edit" @click="showDialog(scope.row)">修改密码</el-button>
-                    <template v-if="scope.row.user_type == 2">
+                    <template v-if="checkSelectable(scope.row)">
                         <el-button type="text" size="small" @click="blockToggle(scope.row)" v-if="scope.row.status == 1" icon="el-icon-goods">禁用</el-button>
                         <el-button type="text" size="small" @click="blockToggle(scope.row)" v-else icon="el-icon-sold-out">解禁</el-button>
                         <el-button type="text" size="small" icon="el-icon-delete" @click="del(scope.row)">删除</el-button>

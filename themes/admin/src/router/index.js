@@ -12,7 +12,7 @@ import Ak from '@/page/Ak'
 //用户管理
 import User from '@/page/User'
 //标签管理
-import Tag from '@/page/Tag'
+import Category from '@/page/Category'
 //日志管理-入口
 import Journal from '@/page/Journal'
 //日志管理-数据展示
@@ -37,7 +37,7 @@ export default new Router({
                 { path: 'home', component: Home, name: "首页" },
                 { path: 'ak', component: Ak, name: "AK管理" },
                 { path: 'user', component: User, name: "用户管理" },
-                { path: 'tag', component: Tag, name: "标签管理" },
+                { path: 'category', component: Category, name: "标签管理" },
                 {
                     path: 'journal',
                     component: Journal,

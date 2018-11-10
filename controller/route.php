@@ -11,48 +11,41 @@
 // $Id$
 
 return [
-    //用户管理
+    //用户
 	'getUserList$'   		=> 'action/action/getUserList',
 	'createUser$'   		=> 'action/action/createUser',
     'delUser$'   		    => 'action/action/delUser',
     'updatePassword$'       => 'action/action/updatePassword',
     'updateUserStatus$'     => 'action/action/updateUserStatus',
 
-    //AK 管理
+    //AK
     'createAk$'             => 'action/action/createAk',
     'getAkList$'   		    => 'action/action/getAkList',
     'delAk$'   		        => 'action/action/delAk',
     'updateAk$'             => 'action/action/updateAk',
 
-    //获取分类标签
+    //分类标签
     'getCategoryList$'      => 'action/action/getCategoryList',
+    'createCategory$'       => 'action/action/createCategory',
+    'delCategory$'   		=> 'action/action/delCategory',
+    'updateCategory$'       => 'action/action/updateCategory',
 
-    //获取日志概要列表
+    //日志
     'getJournalList$'       => 'action/action/getJournalList',
-    //日志发布|下线
     'journalIssueToggle$'   => 'action/action/journalIssueToggle',
-    //删除日志
     'journalDel$'           => 'action/action/journalDel',
-    //根据id获取日志具体内容
     'getJournalById$'       => 'action/action/getJournalById',
 
-    //获取好文推荐列表
+    //好文推荐
     'getPushList$'          => 'action/action/getPushList',
-    //好文发布|下线
     'pushIssueToggle$'      => 'action/action/pushIssueToggle',
-    //好文推荐删除
     'pushDel$'              => 'action/action/pushDel',
-    //新增推荐
     'createPush$'           => 'action/action/createPush',
-    //修改推荐内容
     'updatePush$'           => 'action/action/updatePush',
 
-    //获取资源列表
+    //资源下载
     'getDownList$'          => 'action/action/getDownList',
-    //新增资源信息
     'createDown$'           => 'action/action/createDown',
-    //修改资源信息
     'updateDown$'           => 'action/action/updateDown',
-    //删除资源
-    'delDown$'              => 'action/action/delDown',
+    'delDown$'              => 'action/action/delDown'
 ];

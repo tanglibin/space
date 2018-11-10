@@ -55,7 +55,19 @@ class Action extends Base
     }
 
 
-    /**********************************分类标签************************************************* */
+    /**********************************标签管理************************************************* */
+    //创建标签
+    public function createCategory(){
+        $this->success(Category::getInstance()->createCategory(), '新增成功!');
+    }
+    //删除标签
+    public function delCategory(){
+        $this->success(Category::getInstance()->delCategory(), '删除成功!');
+    }
+    //修改标签
+    public function updateCategory(){
+        $this->success(Category::getInstance()->updateCategory(), '修改成功!');
+    }
     //获取分类标签数据
     public function getCategoryList(){
         $this->success(Category::getInstance()->getCategoryList());
