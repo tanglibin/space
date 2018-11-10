@@ -2,7 +2,7 @@
 @import 'define';
 
 html, body{height: 100%; width: 100%;font-size: @font2;color:@color6;font-family:"Microsoft YaHei"}
-html, body, ul, li, p{margin: 0;padding: 0;}
+html, body, ul, li, p, h5, h6{margin: 0;padding: 0;font-weight: normal;}
 
 i[class^='icon-']{
     background-image: url('../img/icon.png');
@@ -145,4 +145,87 @@ i[class^='icon-']{
     .el-table th.gutter, .el-table colgroup.gutter{
         display: table-cell!important;
     }
+
+    //首页
+    .statistics{
+        &{
+            color: @color14;
+            .size(100%, 115px);
+            position: relative;
+        }
+        &.sta-1{
+            background: #27a9e3;
+        }
+        &.sta-2{
+            background: #28b779;
+        }
+        &.sta-3{
+            background: #842a9b;
+        }
+        &.sta-4{
+            background: #ffb749;
+            color: @color5;
+        }
+        .sta-item{
+            text-align: right;
+            padding: 15px 20px 0 0;
+        }
+        h5{
+            font-size: @font5;
+            color: @color13;
+        }
+        h6{
+            font-size: @font2;
+        }
+        .view-more{
+            font-size: @font1;
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            .size(100%, 25px);
+            box-sizing: border-box;
+            padding: 0 8px;
+            line-height: 25px;
+            background: rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+        }
+        &>i{
+            .size(42px);
+            float: left;
+            background-position-y: -72px;
+            margin: 25px 0 0 20px;
+        }
+        .icon-microcode{
+            background-position-x: -42px;
+        }
+        .icon-push{
+            background-position-x: -84px;
+        }
+        .icon-download{
+            background-position-x: -126px;
+        }
+        .icon-more{
+            background-position: -160px -53px;
+            .size(14px);
+            float: right;
+            margin-top: 5.5px;
+        }
+        &:hover .icon-more{
+            animation: around 1s infinite linear;
+        }
+    }
+    .sta-chart{
+        &{
+            position: relative;
+            margin-top: 20px;
+        }
+        .el-select{
+            position: absolute;
+            right: 0;
+            top: 0;
+            .size(108px, 28px);
+        }
+    }
 }
+
+@keyframes around{0%,50%,90%{transform:translateX(0px)}40%{transform:translateX(-5px)}70%{transform:translateX(-2px)}}
