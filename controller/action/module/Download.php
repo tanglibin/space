@@ -78,4 +78,9 @@ class Download extends Base
     public function getDownList(){
         return Db::name('file_downlod')->order('last_update_time desc')->select();
     }
+
+    //获取总数量
+    public function getCount(){
+        return Db::name('file_downlod')->count();
+    }
 }

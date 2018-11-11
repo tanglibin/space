@@ -6,11 +6,22 @@ use tlb\action\module\User;
 use tlb\action\module\Ak;
 use tlb\action\module\Category;
 use tlb\action\module\Journal;
+use tlb\action\module\Microcode;
 use tlb\action\module\Push;
 use tlb\action\module\Download;
 use think\Db;
 class Action extends Base
 {
+    /**********************************会员中心首页汇总数据获取*********************************** */
+    //获取日志、微码、推荐、资源总数量
+    public function getSum(){
+        $this->success(['journal' => self::getJournalCount(), 'microcode' => self::getMicrocodeCount(), 'push' => self::getPushCount(), 'download' => self::getDownloadCount()]);
+    }
+    //获取当年日志、微码、推荐月数量
+    public function getSumMonth(){
+        $year = input('get.year');
+        $this->success(['journal' => self::getJournalMonth($year)[0], 'microcode' => self::getMicrocodeMonth($year)[0], 'push' => self::getPushMonth($year)[0]]);
+    }
 
     /**********************************用户管理************************************************* */
     //新增用户
@@ -91,6 +102,25 @@ class Action extends Base
     public function getJournalById(){
         $this->success(Journal::getInstance()->getJournalById());
     }
+    //获取日志总数量
+    private function getJournalCount(){
+        return Journal::getInstance()->getCount();
+    }
+    //获取当前选择年份各月份日志数量
+    private function getJournalMonth($year){
+        return Journal::getInstance()->getCountMonth($year);
+    }
+    
+    
+    /**********************************微码管理************************************************* */
+    //获取微码总数量
+    private function getMicrocodeCount(){
+        return Microcode::getInstance()->getCount();
+    }
+    //获取当前选择年份各月份微码数量
+    private function getMicrocodeMonth($year){
+        return Microcode::getInstance()->getCountMonth($year);
+    }
 
 
     /**********************************好文推荐************************************************* */
@@ -114,6 +144,15 @@ class Action extends Base
     public function updatePush(){
         $this->success(Push::getInstance()->updatePush(), '修改成功!');
     }
+    //获取推荐总数量
+    private function getPushCount(){
+        return Push::getInstance()->getCount();
+    }
+    //获取当前选择年份各月份推荐数量
+    private function getPushMonth($year){
+        return Push::getInstance()->getCountMonth($year);
+    }
+    
     
     /**********************************资源下载管理************************************************* */
     //创建资源信息
@@ -132,4 +171,9 @@ class Action extends Base
     public function getDownList(){
         $this->success(Download::getInstance()->getDownList());
     }
+    //获取资源总数量
+    private function getDownloadCount(){
+        return Download::getInstance()->getCount();
+    }
+    
 }

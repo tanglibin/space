@@ -11,6 +11,10 @@
 // $Id$
 
 return [
+    //获取统计数量
+    'getSum$'               => 'action/action/getSum',
+    'getSumMonth$'          => 'action/action/getSumMonth',
+
     //用户
 	'getUserList$'   		=> 'action/action/getUserList',
 	'createUser$'   		=> 'action/action/createUser',
