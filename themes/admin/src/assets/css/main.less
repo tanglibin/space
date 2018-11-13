@@ -1,14 +1,85 @@
 //导入变量定义模块
 @import 'define';
 
-html, body{height: 100%; width: 100%;font-size: @font2;color:@color6;font-family:"Microsoft YaHei"}
-html, body, ul, li, p, h5, h6{margin: 0;padding: 0;font-weight: normal;}
-
+html, body, #app{
+    .size(100%);
+    font-size: @font2;
+    color:@color6;
+    font-family:"Microsoft YaHei"
+}
+html, body, ul, li, p, h2, h5, h6{
+    margin: 0;
+    padding: 0;
+    font-weight: normal;
+}
 i[class^='icon-']{
     background-image: url('../img/icon.png');
     display: block;
 }
 
+//登录页面
+.login-page{
+    &{
+        background-image: url('../img/login-bg.jpg');
+        background-size: 100% 100%;
+        height: 100%;
+        display: flex;
+    }
+    .content {
+        .size(434px, 360px);
+        padding: 0 38px;
+        background: rgba(255, 255, 255, 0.2);
+        margin: auto;
+        border: 2px solid @color15;
+        border-radius: 10px;
+        color: @color12;
+    }
+    h2, .login-btn {
+        text-align: center;
+    }
+    h2 {
+        font-size: @font5;
+        line-height: 40px;
+        margin-top: 22px;
+        font-weight: bold;
+    }
+    .enter-item {
+        border-bottom: 1px solid @color12;
+        display: flex;
+        padding: 24px 0 0 15px;
+        height: 36px;
+        align-items: center;
+        margin-bottom: 9px;
+    }
+    i {
+        .size(25px);
+        margin-right: 12px;
+    }
+    .icon-user {
+        background-position: 0 -123px;
+    }
+    .icon-password {
+        background-position: -30px -123px;
+    }
+    .login-btn {
+        background: @color16;
+        .size(300px, 50px);
+        line-height: 50px;
+        margin: 66px auto 0;
+        font-size: @font4;
+        cursor: pointer;
+    }
+    input {
+        background: transparent;
+        outline: none;
+        border: none;
+        font-size: @font3;
+        color: @color12;
+    }
+    input::-webkit-input-placeholder {
+        color: @color12;
+    }
+}
 
 //头部
 .el-header{
@@ -154,16 +225,16 @@ i[class^='icon-']{
             position: relative;
         }
         &.sta-1{
-            background: #27a9e3;
+            background: @color17;
         }
         &.sta-2{
-            background: #28b779;
+            background: @color18;
         }
         &.sta-3{
-            background: #842a9b;
+            background: @color19;
         }
         &.sta-4{
-            background: #ffb749;
+            background: @color20;
             color: @color5;
         }
         .sta-item{
@@ -171,7 +242,7 @@ i[class^='icon-']{
             padding: 15px 20px 0 0;
         }
         h5{
-            font-size: @font5;
+            font-size: @font6;
             color: @color13;
         }
         h6{
