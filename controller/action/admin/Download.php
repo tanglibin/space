@@ -1,6 +1,6 @@
 <?php
 
-namespace tlb\action\module;
+namespace tlb\action\admin;
 use tlb\common\controller\Base;
 use think\Db;
 class Download extends Base
