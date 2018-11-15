@@ -11,6 +11,9 @@
 // $Id$
 
 return [
+    //登录
+    'loginAdmin$'           => 'action/admin/loginAdmin',
+
     //获取统计数量
     'getSum$'               => 'action/admin/getSum',
     'getSumMonth$'          => 'action/admin/getSumMonth',

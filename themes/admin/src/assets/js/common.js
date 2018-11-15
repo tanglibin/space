@@ -98,7 +98,12 @@ const Common = {
                 success: resolve
             });
         });
-    }
+    },
+
+    /**
+     * 校验用户名输入是否合法
+     */
+    validUserName: (username) => /[a-z0-9]+/.test(username)
 };
 
 export default Common;

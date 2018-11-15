@@ -88,6 +88,11 @@ export default {
         selChange(datas){
             this.selRowsData = datas;
         },
+        //md5加密密码
+        md5(s){
+            let md5 = require('md5');
+            return md5(s);
+        },
         //显示弹框
         showDialog(rowData){
             const isEdit = Boolean(rowData);
@@ -110,6 +115,7 @@ export default {
         add(){
             this.$refs.addform.validate((isSuccess, column) => {
                 if(isSuccess){
+                    this.addFormData.password = this.md5(this.addFormData.password);
                     Common.sendRequest({
                         url: 'createUser.do',
                         type: 'POST',
@@ -127,6 +133,7 @@ export default {
         update(){
             this.$refs.editform.validate((isSuccess, column) => {
                 if(isSuccess){
+                    this.editFormData.password = this.md5(this.editFormData.password);
                     Common.sendRequest({
                         url: 'updatePassword.do',
                         type: 'POST',
