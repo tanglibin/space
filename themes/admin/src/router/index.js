@@ -30,36 +30,51 @@ import Download from '@/page/Download'
 
 
 Vue.use(Router)
-export default new Router({
+let newRouter = new Router({
     routes: [{
-            path: '/',
-            component: Container,
-            redirect: '/home',
-            children: [
-                { path: 'home', component: Home, name: "首页" },
-                { path: 'ak', component: Ak, name: "AK管理" },
-                { path: 'user', component: User, name: "用户管理" },
-                { path: 'category', component: Category, name: "标签管理" },
-                { path: 'journal', component: Journal, redirect: '/',
-                    children: [
-                        { path: '/', component: JournalList, name: "日志管理" },
-                        { path: 'add', component: JournalUpdate, name: "新增日志" },
-                        { path: 'edit/:id', component: JournalUpdate, name: "编辑日志" }
-                    ]
-                },
-                { path: 'microcode', component: Microcode, name: "微码管理" },
-                { path: 'push', component: Push, name: "好文推荐" },
-                { path: 'download', component: Download, name: "资源下载" }
-            ]
-        },
+        path: '/',
+        component: Container,
+        redirect: '/home',
+        children: [
+            { path: 'home', component: Home, name: "首页" },
+            { path: 'ak', component: Ak, name: "AK管理" },
+            { path: 'user', component: User, name: "用户管理" },
+            { path: 'category', component: Category, name: "标签管理" },
+            { path: 'journal', component: Journal, redirect: '/',
+                children: [
+                    { path: '/', component: JournalList, name: "日志管理" },
+                    { path: 'add', component: JournalUpdate, name: "新增日志" },
+                    { path: 'edit/:id', component: JournalUpdate, name: "编辑日志" }
+                ]
+            },
+            { path: 'microcode', component: Microcode, name: "微码管理" },
+            { path: 'push', component: Push, name: "好文推荐" },
+            { path: 'download', component: Download, name: "资源下载" }
+        ]},
         {
             path: '/login',
             component: Login,
-            name: "登录"
+            name: "登录",
+            meta: { needLogin: false }
         },
         {
             path: '*',
-            component: Error
+            component: Error,
+            meta: { needLogin: false }
         }
     ]
 })
+
+//未登录拦截
+newRouter.beforeEach((to, from, next) => {
+    // if(to.meta.needLogin !== false){
+    //     next({
+    //         path:'/login'
+    //     });
+    // }else{
+    //     next();
+    // }
+    next();
+});
+  
+export default newRouter;
