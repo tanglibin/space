@@ -1,8 +1,7 @@
 <?php
 namespace tlb\tlbgl\controller;
-use tlb\common\controller\Base;
-use think\Db;
-class Index extends Base{
+use think\Controller;
+class Index extends Controller{
 	
     public function index()
     {

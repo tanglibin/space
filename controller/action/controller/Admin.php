@@ -2,16 +2,22 @@
 
 namespace tlb\action\controller;
 use tlb\common\controller\Base;
-use tlb\action\module\User;
-use tlb\action\module\Ak;
-use tlb\action\module\Category;
-use tlb\action\module\Journal;
-use tlb\action\module\Microcode;
-use tlb\action\module\Push;
-use tlb\action\module\Download;
-use think\Db;
-class Action extends Base
+use tlb\action\admin\User;
+use tlb\action\admin\Ak;
+use tlb\action\admin\Category;
+use tlb\action\admin\Journal;
+use tlb\action\admin\Microcode;
+use tlb\action\admin\Push;
+use tlb\action\admin\Download;
+use tlb\action\admin\Login;
+class Admin extends Base
 {
+    /******************************************登录********************************************* */
+    public function loginAdmin(){
+        $this->success(Login::getInstance()->login());
+    }
+
+
     /**********************************会员中心首页汇总数据获取*********************************** */
     //获取日志、微码、推荐、资源总数量
     public function getSum(){

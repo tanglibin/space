@@ -11,45 +11,48 @@
 // $Id$
 
 return [
+    //登录
+    'loginAdmin$'           => 'action/admin/loginAdmin',
+
     //获取统计数量
-    'getSum$'               => 'action/action/getSum',
-    'getSumMonth$'          => 'action/action/getSumMonth',
+    'getSum$'               => 'action/admin/getSum',
+    'getSumMonth$'          => 'action/admin/getSumMonth',
 
     //用户
-	'getUserList$'   		=> 'action/action/getUserList',
-	'createUser$'   		=> 'action/action/createUser',
-    'delUser$'   		    => 'action/action/delUser',
-    'updatePassword$'       => 'action/action/updatePassword',
-    'updateUserStatus$'     => 'action/action/updateUserStatus',
+	'getUserList$'   		=> 'action/admin/getUserList',
+	'createUser$'   		=> 'action/admin/createUser',
+    'delUser$'   		    => 'action/admin/delUser',
+    'updatePassword$'       => 'action/admin/updatePassword',
+    'updateUserStatus$'     => 'action/admin/updateUserStatus',
 
     //AK
-    'createAk$'             => 'action/action/createAk',
-    'getAkList$'   		    => 'action/action/getAkList',
-    'delAk$'   		        => 'action/action/delAk',
-    'updateAk$'             => 'action/action/updateAk',
+    'createAk$'             => 'action/admin/createAk',
+    'getAkList$'   		    => 'action/admin/getAkList',
+    'delAk$'   		        => 'action/admin/delAk',
+    'updateAk$'             => 'action/admin/updateAk',
 
     //分类标签
-    'getCategoryList$'      => 'action/action/getCategoryList',
-    'createCategory$'       => 'action/action/createCategory',
-    'delCategory$'   		=> 'action/action/delCategory',
-    'updateCategory$'       => 'action/action/updateCategory',
+    'getCategoryList$'      => 'action/admin/getCategoryList',
+    'createCategory$'       => 'action/admin/createCategory',
+    'delCategory$'   		=> 'action/admin/delCategory',
+    'updateCategory$'       => 'action/admin/updateCategory',
 
     //日志
-    'getJournalList$'       => 'action/action/getJournalList',
-    'journalIssueToggle$'   => 'action/action/journalIssueToggle',
-    'journalDel$'           => 'action/action/journalDel',
-    'getJournalById$'       => 'action/action/getJournalById',
+    'getJournalList$'       => 'action/admin/getJournalList',
+    'journalIssueToggle$'   => 'action/admin/journalIssueToggle',
+    'journalDel$'           => 'action/admin/journalDel',
+    'getJournalById$'       => 'action/admin/getJournalById',
 
     //好文推荐
-    'getPushList$'          => 'action/action/getPushList',
-    'pushIssueToggle$'      => 'action/action/pushIssueToggle',
-    'pushDel$'              => 'action/action/pushDel',
-    'createPush$'           => 'action/action/createPush',
-    'updatePush$'           => 'action/action/updatePush',
+    'getPushList$'          => 'action/admin/getPushList',
+    'pushIssueToggle$'      => 'action/admin/pushIssueToggle',
+    'pushDel$'              => 'action/admin/pushDel',
+    'createPush$'           => 'action/admin/createPush',
+    'updatePush$'           => 'action/admin/updatePush',
 
     //资源下载
-    'getDownList$'          => 'action/action/getDownList',
-    'createDown$'           => 'action/action/createDown',
-    'updateDown$'           => 'action/action/updateDown',
-    'delDown$'              => 'action/action/delDown'
+    'getDownList$'          => 'action/admin/getDownList',
+    'createDown$'           => 'action/admin/createDown',
+    'updateDown$'           => 'action/admin/updateDown',
+    'delDown$'              => 'action/admin/delDown'
 ];
