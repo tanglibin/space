@@ -24,7 +24,7 @@
                         <h5 v-text="sum.microcode"></h5>
                         <h6>微码条数</h6>
                     </div>
-                    <div class="view-more" @click="$router.push('/push')">VIEW MORE<i class="icon-more"></i></div>
+                    <div class="view-more" @click="$router.push('/microcode')">VIEW MORE<i class="icon-more"></i></div>
                 </div>
             </el-col>
             <el-col :span="6">
@@ -34,7 +34,7 @@
                         <h5 v-text="sum.push"></h5>
                         <h6>好文推荐条数</h6>
                     </div>
-                    <div class="view-more" @click="$router.push('/microcode')">VIEW MORE<i class="icon-more"></i></div>
+                    <div class="view-more" @click="$router.push('/push')">VIEW MORE<i class="icon-more"></i></div>
                 </div>
             </el-col>
             <el-col :span="6">
