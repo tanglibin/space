@@ -46,16 +46,17 @@ trait Jump
      * 操作错误跳转的快捷方法
      * @access protected
      * @param mixed  $msg    提示信息
+     * @param mixed  $data   返回的数据
      * @return void
      * @throws HttpResponseException
      */
-    protected function error($msg = '')
+    protected function error($msg = '', $data = '')
     {
         
         $result = [
             'status' => false,
             'msg'  => $msg,
-            'data' => ''
+            'data' => $data
         ];
         $type = $this->getResponseType();
         $response = Response::create($result, $type)->header([]);

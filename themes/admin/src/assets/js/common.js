@@ -73,14 +73,16 @@ const Common = {
             //请求发送
             axios(axiosParam).then(result => {
                 result = JSON.parse(result.data);
-                result.status ? resolve(result) : reject(result.msg);
+                result.status ? resolve(result) : reject(result);
             }).catch(reject);
 
         }).then(({ data, msg }) => {
             msg && Common.message(msg);
             op.success(data);
-        }).catch((msg = '网络异常，请稍后再试~！') => {
+
+        }).catch(({ data=true, msg='网络异常，请稍后再试~！'})=>{
             Common.message(msg);
+            data == -1 && document.getElementById('app').__vue__.$router.push('/login');
             op.error && op.error();
         });
     },

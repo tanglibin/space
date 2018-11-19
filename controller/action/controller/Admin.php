@@ -12,11 +12,14 @@ use tlb\action\admin\Download;
 use tlb\action\admin\Login;
 class Admin extends Base
 {
-    /******************************************登录********************************************* */
+    /******************************************登录/注销********************************************* */
     public function loginAdmin(){
         $this->success(Login::getInstance()->login());
     }
-
+    //注销
+    public function logoutAdmin(){
+        $this->success(Login::getInstance()->logout());
+    }
 
     /**********************************会员中心首页汇总数据获取*********************************** */
     //获取日志、微码、推荐、资源总数量

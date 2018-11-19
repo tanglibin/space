@@ -65,16 +65,4 @@ let newRouter = new Router({
     ]
 })
 
-//未登录拦截
-newRouter.beforeEach((to, from, next) => {
-    // if(to.meta.needLogin !== false){
-    //     next({
-    //         path:'/login'
-    //     });
-    // }else{
-    //     next();
-    // }
-    next();
-});
-  
 export default newRouter;

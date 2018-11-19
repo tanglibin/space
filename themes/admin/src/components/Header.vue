@@ -14,14 +14,19 @@ export default {
     name: "headerBar",
     data() {
         return {
-            username : "tony_429"
+            username : document.getElementById('cur_username').value
         };
     },
     methods: {
         //退出登录
         logout(){
             Common.confirm('此操作将注销登录, 是否继续?', ()=>{
-                //注销操作
+                Common.sendRequest({
+                    url: 'logoutAdmin.do',
+                    success: (result) => {
+                        this.$router.push('/login');
+                    }
+                });
             });
         }
     }

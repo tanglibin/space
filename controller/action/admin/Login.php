@@ -1,9 +1,9 @@
 <?php
 
 namespace tlb\action\admin;
-use tlb\common\controller\Base;
+use think\Controller;
 use think\Db;
-class Login extends Base
+class Login extends Controller
 {
     //object 对象实例
     private static $instance;
@@ -17,12 +17,22 @@ class Login extends Base
         return self::$instance;  
     }
 
-
+    //登录
     public function login(){
         if(request()->isPost()){
             $data=input('post.');
-            return true;
+            $user_info=Db::name('user')->where(['username'=>$data['username'], 'password'=>$data['password'], 'user_type'=>1])->find();
+            if($user_info){
+                session('admin_username', $user_info['username']);
+                return true;
+            }
+            $this->error('用户名或密码错误');
         }
+    }
+
+    //注销
+    public function logout(){
+        session('admin_username', null);
     }
 
 }

@@ -4,11 +4,11 @@
             <h2>管理后台登录</h2>
             <div class="enter-item">
                 <i class="icon-user"></i>
-                <input v-model.trim="username" placeholder="请输入用户名">
+                <input v-model.trim="username" @keyup.enter="keyup" placeholder="请输入用户名">
             </div>
             <div class="enter-item">
                 <i class="icon-password"></i>
-                <input v-model.trim="password" placeholder="请输入密码" type="password">
+                <input v-model.trim="password" @keyup.enter="keyup" placeholder="请输入密码" type="password">
             </div>
             <div class="login-btn" @click="login">登 录</div>
         </div>
@@ -27,6 +27,11 @@ export default {
         };
     },
     methods: {
+        //按回车键
+        keyup(){
+            this.username && this.password && this.login();
+        },
+        //登录
         login(){
             let username = this.username, 
                 password = this.password;
@@ -48,6 +53,8 @@ export default {
                     password: md5(password),
                 },
                 success: (result) => {
+                    //刷新用户名并进行页面跳转
+                    document.getElementById('cur_username').value = username;
                     this.$router.push('/');
                 }
             });

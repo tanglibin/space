@@ -13,6 +13,8 @@
 return [
     //登录
     'loginAdmin$'           => 'action/admin/loginAdmin',
+    //注销
+    'logoutAdmin$'           => 'action/admin/logoutAdmin',
 
     //获取统计数量
     'getSum$'               => 'action/admin/getSum',

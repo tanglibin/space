@@ -1,9 +1,9 @@
 <?php
 
 namespace tlb\action\admin;
-use tlb\common\controller\Base;
+use tlb\common\controller\AdminBase;
 use think\Db;
-class Microcode extends Base
+class Microcode extends AdminBase
 {
     //object 对象实例
     private static $instance;
