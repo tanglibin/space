@@ -216,6 +216,16 @@ i[class^='icon-']{
     .el-table th.gutter, .el-table colgroup.gutter{
         display: table-cell!important;
     }
+    .chapter-title-enter{
+        position: absolute;
+        top: 1px;
+        left: 16px;
+        border: none;
+        .size(calc(100% - 90px), 38px);
+        padding: 0;
+        z-index: 1;
+        outline: none;
+    }
 
     //首页
     .statistics{
@@ -285,6 +295,7 @@ i[class^='icon-']{
             animation: around 1s infinite linear;
         }
     }
+    //首页
     .sta-chart{
         &{
             position: relative;

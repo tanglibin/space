@@ -82,8 +82,7 @@ const Common = {
 
         }).catch(({ data=true, msg='网络异常，请稍后再试~！'})=>{
             Common.message(msg);
-            data == -1 && document.getElementById('app').__vue__.$router.push('/login');
-            op.error && op.error();
+            data == -1 ? document.getElementById('app').__vue__.$router.push('/login') : (op.error && op.error());
         });
     },
 

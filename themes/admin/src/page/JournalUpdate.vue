@@ -10,38 +10,45 @@
         <!-- 正文表单 -->
         <section class="form-wrap">
             <el-form label-position="right" label-width="100px" :model="formData" :rules="rules" label-suffix="：" ref='form'>
-                <el-form-item label="标题" prop="title">
-                    <el-input v-model="formData.title" type="text" placeholder="请输入概要标题"></el-input>
+                <el-form-item label="标题" prop="info.title">
+                    <el-input v-model="formData.info.title" type="text" placeholder="请输入概要标题"></el-input>
                 </el-form-item>
-                <el-form-item label="概要" prop="article">
-                    <el-input type="textarea" v-model="formData.article" placeholder="请输入概要内容"></el-input>
+                <el-form-item label="概要" prop="info.article">
+                    <el-input type="textarea" v-model="formData.info.article" placeholder="请输入概要内容"></el-input>
                 </el-form-item>
                 <el-row>
-                    <el-col :span="colspan">
-                        <el-form-item label="分类标签" prop="category_id">
-                            <el-select v-model="formData.category_id" filterable allow-create placeholder="请选择分类标签">
+                    <el-col :span="8">
+                        <el-form-item label="分类标签" prop="info.category_id">
+                            <el-select v-model="formData.info.category_id" filterable placeholder="请选择分类标签">
                                 <el-option v-for="(item, index) in categoryList" :key="index" :label="item.category_name" :value="item.id"></el-option>
                             </el-select>
                         </el-form-item>
                     </el-col>
-                    <el-col :span="colspan">
-                        <el-form-item label="文章类型" prop="type">
-                            <el-select v-model="formData.type" placeholder="请选择文章类型" :disabled="formData.chapter_title.length > 1">
-                                <el-option label="单节" value="1"></el-option>
-                                <el-option label="多节" value="2"></el-option>
+                    <el-col :span="8">
+                        <el-form-item label="发布状态">
+                            <el-select v-model="formData.info.status" placeholder="请选择发布状态">
+                                <el-option label="待发布" :value="1"></el-option>
+                                <el-option label="发布" :value="2"></el-option>
                             </el-select>
                         </el-form-item>
                     </el-col>
-                    <el-col :span="colspan" v-if="formData.type==2">
-                        <el-form-item label="章节标题" prop="chapter_title">
-                            <el-select v-model="formData.chapter_title" filterable allow-create placeholder="请输入章节标题">
-                                <el-option v-for="(item, index) in chapter_title_list" :key="index" :label="item" :value="item"></el-option>
+                    <el-col :span="8">
+                        <el-form-item label="文章类型">
+                            <el-select v-model="formData.info.type" placeholder="请选择文章类型" :disabled="chapter_title_list.length > 1">
+                                <el-option label="单节" :value="1"></el-option>
+                                <el-option label="多节" :value="2"></el-option>
                             </el-select>
                         </el-form-item>
                     </el-col>
                 </el-row>
-                <el-form-item label="内容" prop="content">
-                    <vue-ueditor-wrap v-model="formData.content" :config="myConfig"></vue-ueditor-wrap>
+                <el-form-item label="章节标题" prop="detail.title" v-if="formData.info.type==2">
+                    <input class="chapter-title-enter" type="text" v-model="formData.detail.chapter_title">
+                    <el-select v-model="formData.detail.title" clearable placeholder="请选择章节标题" @change="changeChapTitle">
+                        <el-option v-for="(item, index) in chapter_title_list" :key="index" :label="item.chapter_title" :value="index"></el-option>
+                    </el-select>
+                </el-form-item>
+                <el-form-item label="内容" prop="detail.content">
+                    <vue-ueditor-wrap v-model="formData.detail.content" :config="myConfig"></vue-ueditor-wrap>
                 </el-form-item>
                 <el-row type="flex" justify="end">
                     <el-button type="warning" size="medium" @click="resetForm">重  置</el-button>
@@ -62,16 +69,25 @@ export default {
     components: {VueUeditorWrap},
     data() {
         return {
-            formData: {content: '', chapter_title: ''},// 表单对象
+            editData: {}, //编辑原始数据
+            formData: {  // 表单对象
+                info: {  //概要部分
+                    status: 1,
+                    type: 1,
+                },
+                detail: {//详情部分
+                    content: ''
+                }
+            },
+            contentValid: true, //内容校验状态默认设定
             rules: Common.getRequiredRuls({//校验规则
-                title: '请输入标题',
-                article: '请输入概要',
-                category_id: {msg: '请选择分类标签', type: 'change'},
-                type: {msg: '请选择章节类型', type: 'change'},
-                content: '请输入内容'
+                'info.title': '请输入标题',
+                'info.article': '请输入概要',
+                'info.category_id': {msg: '请选择分类标签', type: 'change'},
+                'detail.content': '请输入内容'
             }),
             rule2: Common.getRequiredRuls({//校验规则, 多选时，章节标题
-                chapter_title: {msg: '请输入章节标题', type: 'change'}
+                'detail.title': {msg: '请输入章节标题', type: 'change'}
             }),
             categoryList: [], //标签分类
             chapter_title_list : [], //章节标题下拉选项数据
@@ -88,18 +104,12 @@ export default {
     },
     watch: {
         //监听文章类型选择， 控制校验规则是否包含章节标题
-        'formData.type'(value){
-            value == 2 ? Object.assign(this.rules, this.rule2) : delete this.rules.chapter_title;
+        'formData.info.type'(value){
+            value == 2 ? Object.assign(this.rules, this.rule2) : delete this.rules['detail.title'];
         },
         //监听内容改变，刷新校验结果
-        'formData.content'(value){
-            this.$refs.form.validate('content');
-        }
-    },
-    computed:{
-        //文章类型为单节时， 两块平分，多节时则三分
-        colspan(){
-            return this.formData.type == 2 ? 8 : 12;
+        'formData.detail.content'(value){
+            !this.contentValid && this.$refs.form.validate('detail.content');
         }
     },
     methods: {
@@ -109,6 +119,21 @@ export default {
             Common.getCategoryList().then((list)=>{
                 this.categoryList = list;
             })
+        },
+        //切换章节标题
+        changeChapTitle(val){
+            let detailData_1 = this.editData.detail,
+                detailData_2 = this.formData.detail,
+                select = detailData_1[val];
+            detailData_2.chapter_title = select ? select.chapter_title : '';
+
+            if(select && JSON.stringify(detailData_1) != JSON.stringify(detailData_2)){
+                Common.confirm('当前章节有改动, 是否离开?', ()=>{
+                    let select = detailData_1[val];
+                    detailData_2.chapter_title = select ? select.chapter_title : '';
+                    detailData_2.content = select.content;
+                })
+            }
         },
         //重置表单
         resetForm(){
@@ -122,7 +147,11 @@ export default {
             var a = this;
             var b = this.formData.category_id;
             this.$refs.form.validate((isSuccess, column) => {
+                if(isSuccess){
 
+                }else{
+                    this.contentValid = !Boolean(column['detail.content']);
+                }
             });
         }
     },
@@ -132,19 +161,23 @@ export default {
 
         //编辑状态获取数据
         let editId = this.$route.params.id;
-       // this.formData = {"id":2,"category_id":2,"title":"标题2标题2标题2标题2标题2","article":"概要2概要2概要2概要2概要2概要2概要2概要2概要2概要2概要2概要2概要2","type":"1","issue_time":"2018-10-25 22:16:06","create_time":"2018-10-25 22:16:06","status":"1","detail":[{"id":2,"info_id":2,"chapter_title":null,"content":"内容2\n内容2内容2内容2内容2内容2内容2内容2内容2内容2内容2内容2内容2内容2内容2内容2内容2内容2内容2内容2内容2内容2内容2内容2内容2内容2内容2内容2内容2内容2内容2内容2内容2内容2内容2内容2内容2内容2内容2内容2内容2内容2内容2内容2内容2内容2内容2内容2内容2内容2内容2内容2内容2内容2内容2内容2内容2内容2内容2内容2内容2内容2内容2内容2\n"}]};
-        // if(editId){
-        //     Common.sendRequest({
-        //         url: 'getJournalById.do',
-        //         data: {id: editId},
-        //         success: (result) => {
-        //             this.formData = result;
-        //         },
-        //         error: ()=> {
-        //             this.$router.go(-1);
-        //         }
-        //     });
-        // }
+        if(editId){
+            Common.sendRequest({
+                url: 'getJournalById.do',
+                data: {id: editId},
+                success: (result) => {
+                    this.editData = result;
+                    this.formData = {
+                        info: result.info,
+                        detail: Object.assign({title: 0}, result.detail[0])
+                    }
+                    this.chapter_title_list = result.detail;
+                },
+                error: ()=> {
+                    this.$router.go(-1);
+                }
+            });
+        }
     },
 };
 </script>

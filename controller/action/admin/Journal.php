@@ -69,7 +69,7 @@ class Journal extends AdminBase
                 $tempA = $dateArr;
             }
             if (isset($tempA)) {
-                $where['a.createtime'] = $tempA;
+                $where['a.issue_time'] = $tempA;
             }
 
             //如果没有过滤条件，则设为1
@@ -89,7 +89,15 @@ class Journal extends AdminBase
     public function journalIssueToggle(){
         if(request()->isPost()){
             $data=input('post.');
-            $r=Db::name("article_info")->where(['id'=>$data['id']])->update(['status'=>$data['status']],false,true);
+
+            $where['id'] = $data['id'];
+            $o = Db::name("essay_push")->where($where)->find();
+
+            if(empty($o['issue_time']) && $data['status'] == '2'){
+                $data['issue_time'] = date("Y-m-d H:i:s");
+            }
+
+            $r=Db::name("article_info")->where($where)->update($data);
             if($r){
                 return true;
             }else{
@@ -126,8 +134,9 @@ class Journal extends AdminBase
             return $this->error("非法请求！");
         }
         $detail = Db::name('article_detail')->where(['info_id' => $id]) -> select();
-        $article['detail'] = $detail;
-        return $article;
+        $response['info'] = $article;
+        $response['detail'] = $detail;
+        return $response;
     }
     
     //获取总数量
