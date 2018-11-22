@@ -51,7 +51,7 @@
                     <vue-ueditor-wrap v-model="formData.detail.content" :config="myConfig"></vue-ueditor-wrap>
                 </el-form-item>
                 <el-row type="flex" justify="end">
-                    <el-button type="warning" size="medium" @click="resetForm">重  置</el-button>
+                    <el-button type="warning" size="medium" @click="deleteChap">删除章节</el-button>
                     <el-button type="primary" size="medium" @click="submit()">保存章节</el-button>
                     <el-button type="primary" size="medium" @click="submit(1)">完成编辑</el-button>
                 </el-row>
@@ -69,6 +69,7 @@ export default {
     components: {VueUeditorWrap},
     data() {
         return {
+            editId: null, //日志id，编辑时传递
             editData: {}, //编辑原始数据
             formData: {  // 表单对象
                 info: {  //概要部分
@@ -124,19 +125,12 @@ export default {
         changeChapTitle(val){
             let detailData_1 = this.editData.detail,
                 detailData_2 = this.formData.detail,
-                select = detailData_1[val];
-            detailData_2.chapter_title = select ? select.chapter_title : '';
-
-            if(select && JSON.stringify(detailData_1) != JSON.stringify(detailData_2)){
-                Common.confirm('当前章节有改动, 是否离开?', ()=>{
-                    let select = detailData_1[val];
-                    detailData_2.chapter_title = select ? select.chapter_title : '';
-                    detailData_2.content = select.content;
-                })
-            }
+                select = detailData_1[val] || {};
+            detailData_2.chapter_title = select.chapter_title || '';
+            detailData_2.content = select.content || '';
         },
-        //重置表单
-        resetForm(){
+        //删除章节
+        deleteChap(){
 
         },
         /**
@@ -144,11 +138,9 @@ export default {
          * @param flg {Boolean} 是否完成编辑
          */
         submit(flg){
-            var a = this;
-            var b = this.formData.category_id;
             this.$refs.form.validate((isSuccess, column) => {
                 if(isSuccess){
-
+                    //if()
                 }else{
                     this.contentValid = !Boolean(column['detail.content']);
                 }
@@ -160,11 +152,11 @@ export default {
         this.getCategory();
 
         //编辑状态获取数据
-        let editId = this.$route.params.id;
-        if(editId){
+        this.editId = this.$route.params.id;
+        if(this.editId){
             Common.sendRequest({
                 url: 'getJournalById.do',
-                data: {id: editId},
+                data: {id: this.editId},
                 success: (result) => {
                     this.editData = result;
                     this.formData = {
