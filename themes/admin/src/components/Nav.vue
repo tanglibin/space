@@ -12,17 +12,17 @@
 
 <script>
 export default {
-  name: "leftNav",
+  name: 'leftNav',
   data() {
     return {
       navList: [
-        { name: "AK管理", route: "/ak", icon: "icon-ak" },
-        { name: "用户管理", route: "/user", icon: "icon-user" },
-        { name: "标签管理", route: "/category", icon: "icon-category" },
-        { name: "日志管理", route: "/journal", icon: "icon-journal" },
-        { name: "微码管理", route: "/microcode", icon: "icon-microcode" },
-        { name: "好文推荐", route: "/push", icon: "icon-push" },
-        { name: "资源下载", route: "/download", icon: "icon-download" }
+        { name: 'AK管理', route: '/ak', icon: 'icon-ak' },
+        { name: '用户管理', route: '/user', icon: 'icon-user' },
+        { name: '标签管理', route: '/category', icon: 'icon-category' },
+        { name: '日志管理', route: '/journal', icon: 'icon-journal' },
+        { name: '微码管理', route: '/microcode', icon: 'icon-microcode' },
+        { name: '好文推荐', route: '/push', icon: 'icon-push' },
+        { name: '资源下载', route: '/download', icon: 'icon-download' }
       ]
     };
   }
