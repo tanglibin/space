@@ -30,7 +30,7 @@ import Download from '@/page/Download'
 
 
 Vue.use(Router)
-let newRouter = new Router({
+export default new Router({
     routes: [{
         path: '/',
         component: Container,
@@ -54,15 +54,11 @@ let newRouter = new Router({
         {
             path: '/login',
             component: Login,
-            name: "登录",
-            meta: { needLogin: false }
+            name: "登录"
         },
         {
             path: '*',
-            component: Error,
-            meta: { needLogin: false }
+            component: Error
         }
     ]
-})
-
-export default newRouter;
+});
