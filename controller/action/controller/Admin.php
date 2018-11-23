@@ -107,6 +107,14 @@ class Admin extends Base
     public function journalDel(){
         $this->success(Journal::getInstance()->journalDel(), '日志删除成功!');
     }
+    //修改日志
+    public function journalUpdate(){
+        $this->success(Journal::getInstance()->journalUpdate(), '修改日志成功!');
+    }
+    //新增日志
+    public function journalAdd(){
+        $this->success(Journal::getInstance()->journalAdd(), '新增日志成功!');
+    }
     //根据id获取日志具体内容
     public function getJournalById(){
         $this->success(Journal::getInstance()->getJournalById());

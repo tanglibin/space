@@ -139,6 +139,55 @@ class Journal extends AdminBase
         return $response;
     }
     
+    //修改日志
+    public function journalUpdate(){
+        if(request()->isPost()){
+            $data=input('post.');
+
+        }
+    }
+    
+    //新增日志
+    public function journalAdd(){
+        if(request()->isPost()){
+            $data = input('post.');
+            $info = htmlspecialchars_decode( $data['info'] );
+            $info = json_decode($info, true);
+
+            $detail = htmlspecialchars_decode( $data['detail'] );
+            $detail = json_decode($detail, true);
+
+            $now = date("Y-m-d H:i:s");
+
+            //如果当前选的发布状态，则设置发布时间
+            if($info['status'] == 2){
+                $info['issue_time'] = $now;
+            }
+            //创建时间
+            $info['create_time'] = $now;
+
+            //开启事务
+            Db::startTrans();
+
+            //新增概要
+            $infoid = Db::name('article_info')->insert($info,false,true);
+            if(!$infoid){
+                $this->error('新增失败，请稍后再试！');
+            }
+
+            //概要id
+            $detail['info_id'] = $infoid;
+            $detailid = Db::name('article_detail')->insert($detail,false,true);
+            if($detailid){
+                Db::commit();
+                return $infoid;
+            }else{
+                Db::rollback();
+                $this->error('新增失败，请稍后再试！');
+            }
+        }
+    }
+
     //获取总数量
     public function getCount(){
         return Db::name('article_info')->count();

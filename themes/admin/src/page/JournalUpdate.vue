@@ -41,7 +41,7 @@
                         </el-form-item>
                     </el-col>
                 </el-row>
-                <el-form-item label="章节标题" prop="detail.title" v-if="formData.info.type==2">
+                <el-form-item label="章节标题" prop="detail.chapter_title" v-if="formData.info.type==2">
                     <input class="chapter-title-enter" type="text" v-model="formData.detail.chapter_title">
                     <el-select v-model="formData.detail.title" clearable placeholder="请选择章节标题" @change="changeChapTitle">
                         <el-option v-for="(item, index) in chapter_title_list" :key="index" :label="item.chapter_title" :value="index"></el-option>
@@ -88,7 +88,7 @@ export default {
                 'detail.content': '请输入内容'
             }),
             rule2: Common.getRequiredRuls({//校验规则, 多选时，章节标题
-                'detail.title': {msg: '请输入章节标题', type: 'change'}
+                'detail.chapter_title': '请输入章节标题'
             }),
             categoryList: [], //标签分类
             chapter_title_list : [], //章节标题下拉选项数据
@@ -106,7 +106,7 @@ export default {
     watch: {
         //监听文章类型选择， 控制校验规则是否包含章节标题
         'formData.info.type'(value){
-            value == 2 ? Object.assign(this.rules, this.rule2) : delete this.rules['detail.title'];
+            value == 2 ? Object.assign(this.rules, this.rule2) : delete this.rules['detail.chapter_title'];
         },
         //监听内容改变，刷新校验结果
         'formData.detail.content'(value){
@@ -114,46 +114,24 @@ export default {
         }
     },
     methods: {
-        //获取标签分类
+        /*获取标签分类*/
         getCategory(){
             //请求分类标签数据
             Common.getCategoryList().then((list)=>{
                 this.categoryList = list;
             })
         },
-        //切换章节标题
+        /*切换章节标题*/
         changeChapTitle(val){
             let detailData_1 = this.editData.detail,
                 detailData_2 = this.formData.detail,
                 select = detailData_1[val] || {};
+            //页面更新填充标题及内容
             detailData_2.chapter_title = select.chapter_title || '';
             detailData_2.content = select.content || '';
         },
-        //删除章节
-        deleteChap(){
-
-        },
-        /**
-         * 提交
-         * @param flg {Boolean} 是否完成编辑
-         */
-        submit(flg){
-            this.$refs.form.validate((isSuccess, column) => {
-                if(isSuccess){
-                    //if()
-                }else{
-                    this.contentValid = !Boolean(column['detail.content']);
-                }
-            });
-        }
-    },
-    mounted() {
-        //获取标签分类
-        this.getCategory();
-
-        //编辑状态获取数据
-        this.editId = this.$route.params.id;
-        if(this.editId){
+        /*获取日志数据*/
+        getDataById(){
             Common.sendRequest({
                 url: 'getJournalById.do',
                 data: {id: this.editId},
@@ -169,7 +147,85 @@ export default {
                     this.$router.go(-1);
                 }
             });
-        }
+        },
+        /**
+         * 提交
+         * @param flg {Boolean} 是否完成编辑
+         */
+        submit(flg){
+            this.$refs.form.validate((isSuccess, column) => {
+                if(isSuccess){
+                    this.editId ? this.update(flg) : this.add(flg);
+                }else{
+                    this.contentValid = !Boolean(column['detail.content']);
+                }
+            });
+        },
+        /**
+         * 修改, 不管是否为多章节类型，一次修改提交只能修改一章
+         * @param flg {Boolean} 是否完成编辑
+         */
+        update(flg){
+            let formData = this.formData, 
+                editData = this.editData,
+                param = {};
+
+            //先确定概要部分是否有改动，如果没改动则不传递修改
+            if(JSON.stringify(editData.info) != JSON.stringify(formData.info)){
+                param.info = JSON.stringify(formData.info);
+            }
+
+            //判断当前选中章节有无修改即可
+            let detail = editData.detail[formData.detail.title], 
+                curDetail = formData.detail;
+            if(detail.chapter_title != curDetail.chapter_title || detail.content != curDetail.content){
+                param.detail = JSON.stringify(curDetail);
+            }
+
+            //判断当前是否有改动，若无则提交
+            if(JSON.stringify(param) == '{}'){
+                return Common.message('当前没有改动！');
+            }
+
+            //请求发送
+            Common.sendRequest({
+                url: 'journalUpdate.do',
+                type: 'POST',
+                data: param,
+                success: (result) => {
+                    flg && this.$router.push('/journal');
+                }
+            });
+        },
+        /**
+         * 新增提交
+         * @param flg {Boolean} 是否完成编辑  
+         */
+        add(flg){
+            let formData = this.formData;
+            //请求发送
+            Common.sendRequest({
+                url: 'journalAdd.do',
+                type: 'POST',
+                data: {info: JSON.stringify(formData.info), detail: JSON.stringify(formData.detail)},
+                success: (result) => {
+                    let route = flg ? '/journal' : '/journal/edit/' + result;
+                    this.$router.push(route);
+                }
+            });
+        },
+        /*删除章节*/
+        deleteChap(){
+
+        },
+    },
+    mounted() {
+        //获取标签分类
+        this.getCategory();
+
+        //编辑状态获取数据
+        this.editId = this.$route.params.id;
+        this.editId && this.getDataById();
     },
 };
 </script>

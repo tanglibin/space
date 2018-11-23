@@ -44,6 +44,8 @@ return [
     'journalIssueToggle$'   => 'action/admin/journalIssueToggle',
     'journalDel$'           => 'action/admin/journalDel',
     'getJournalById$'       => 'action/admin/getJournalById',
+    'journalUpdate$'        => 'action/admin/journalUpdate',
+    'journalAdd$'           => 'action/admin/journalAdd',
 
     //好文推荐
     'getPushList$'          => 'action/admin/getPushList',
