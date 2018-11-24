@@ -81,8 +81,8 @@
         <!-- 底部备案编码 -->
         <footer class="footer">
             <span>Copyright ©2018 tlbin.com All Rights Reserved.</span>
-            <span class="link">京ICP证030173号</span>
-            <span class="link">京公网安备11000002000001号 <i class="icon-gwab"></i></span>
+            <span class="link" @click="openPage('http://www.miitbeian.gov.cn/')">粤ICP备18094587号</span>
+            <span class="link">京公网安备xxxxxx号 <i class="icon-gwab"></i></span>
         </footer>
     </div>
 </template>
@@ -93,6 +93,11 @@ export default {
     data() {
         return {};
     },
-    mounted() {}
+    methods:{
+        //新窗口跳转
+        openPage(url){
+            window.open(url);
+        }
+    }
 };
 </script>
