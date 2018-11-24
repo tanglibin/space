@@ -1,9 +1,9 @@
 <template>
     <header class="header">
-        <section class="main-body">
-            <nav class="menu">
-                <ul class="menubar" ref="menubar">
-                    <li class="menuitem" 
+        <section class="main-cont">
+            <nav class="topnav">
+                <ul class="navbar" ref="navbar">
+                    <li class="navitem" 
                         v-for="(item, index) in navList" 
                         :class="{'is-active': index == activeIndex}" 
                         :key="index" 
@@ -61,7 +61,7 @@ export default {
         //设置下边框位置
         setBarPosition(){
             let refs = this.$refs,
-                item = refs.menubar.children[this.activeIndex],
+                item = refs.navbar.children[this.activeIndex],
                 activebar = this.activebar || refs.activebar,
                 left = item.offsetLeft,
                 width = item.clientWidth;

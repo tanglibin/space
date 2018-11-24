@@ -1,70 +1,60 @@
 @import 'define';
 
-html, body, #app{
-    .size(100%);
-    font-size: @font2;
-    color:@color1;
-    font-family:"Microsoft YaHei";
-    background-color: @color2;
-}
-html, body, ul, li, p, h2, h5, h6{
-    margin: 0;
-    padding: 0;
-    font-weight: normal;
-}
+html, body, #app{.size(100%);font-size: @font2;color:@color1;font-family:"Microsoft YaHei";background-color: @color2;min-width: 1200px;color: @color8;}
+html, body, ul, li, p, h2, h5, h6{margin: 0;padding: 0;font-weight: normal;}
+ul{list-style-type: none;}
+.main-cont{width: 1200px;margin: 0 auto;position: relative;}
 
-.main-body{
-    width: 1200px;
-    margin: 0 auto;
-    position: relative;
+i[class^='icon-']{
+    background-image: url('../img/icon.png');
+    display: inline-block;
 }
 
 //头部
 .header{
-    &{
-        height: 65px;
-        background-color: @color3;
-        box-shadow: 0px 3px 7px 0px rgba(193, 193, 193, 0.35);
+    &{height: 65px;background-color: @color3;box-shadow: 0px 3px 7px 0px rgba(193, 193, 193, 0.35);}
+    .topnav{position: relative;}
+    .navbar{height: 65px;line-height: 65px;font-size: @font3;color: @color4;}
+    .navitem{float: left;padding: 0 20px;cursor: pointer;}
+    .navitem:hover, .is-active{color: @color5;}
+    .active-bar{position: absolute;left: 0;bottom: -2px;height: 2px;background-color: @color5;transition: transform .3s cubic-bezier(.645,.045,.355,1);}
+    .searchbar{position: absolute;right: 0;top: 12.5px;}
+    .el-input__inner{border-radius: 20px;border-color: @color6!important;}
+    .el-select .el-select__caret{transform: rotateZ(0deg);}
+    .el-select__caret::before{content: "\E619";}
+}
+
+//首页
+.index-cont{
+    .main{display: flex;justify-content: space-between;padding-top: 48px;}
+    .leftside{
+        &{width: 820px;}
+        .box-title{padding: 0 40px;}
+        .title-text{border-bottom: 2px solid @color5;}
     }
-    .menu{
-        position: relative;
+    .box-title{background-color: @color3;height: 62px;border-bottom: 1px solid @color2;}
+    .title-text{font-size: @font6;display: inline-block;padding-top: 5px;height: 55px;line-height: 55px;}
+    .show-more{color: @color7;text-decoration: none;float: right;font-size: @font0;margin-top: 22px;}
+    .show-more:hover{color: @color5;}
+    .writing-item{background-color: @color3;margin-bottom: 20px;padding: 0 40px;height: 203px;padding-top: 35px;}
+    .item-title{color: @color5;font-size: @font6;}
+    .item-meta{color: @color7;margin: 10px 0 12px;}
+    .item-summary{line-height: 25px;margin-bottom: 15px;height: 50px;display: -webkit-box;-webkit-box-orient: vertical;-webkit-line-clamp: 2;overflow: hidden;}
+    .item-btn{width: 100px;background-color: @color9;border: none;color: @color7;}
+    .item-btn:hover{background-color: @color5;color: @color3;}
+
+    .rightside{
+        &{width: 360px;}
+        >section{background: @color3;padding: 0 20px;margin-bottom: 20px;}
     }
-    .menubar{
-        height: 65px;
-        line-height: 65px;
-        list-style-type: none;
-        font-size: @font3;
-        color: @color4;
+    .microcode-box{height: 485px;}
+    .link-item{line-height: 40px;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;}
+
+    .footer{
+        &{background: @color3;border-top: 1px solid @color10;margin-top: 50px;text-align: center;height: 74px;line-height: 74px;}
+        span{margin: 0 8px;}
+        .link{cursor: pointer;}
+        .link:hover{color: @color5;}
     }
-    .menuitem{
-        float: left;
-        padding: 0 20px;
-        cursor: pointer;
-    }
-    .menuitem:hover, .is-active{
-        color: @color5;
-    }
-    .active-bar{
-        position: absolute;
-        left: 0;
-        bottom: -2px;
-        height: 2px;
-        background-color: @color5;
-        transition: transform .3s cubic-bezier(.645,.045,.355,1);
-    }
-    .searchbar{
-        position: absolute;
-        right: 0;
-        top: 12.5px;
-    }
-    .el-input__inner{
-        border-radius: 20px;
-        border-color: @color6!important;
-    }
-    .el-select .el-select__caret{
-        transform: rotateZ(0deg);
-    }
-    .el-select__caret::before{
-        content: "\E619";
-    }
+    .icon-gwab{.size(18px);position: relative;top: 3px;}
 }

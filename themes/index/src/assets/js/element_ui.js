@@ -1,11 +1,12 @@
 // 所需Element-ui 的组件配置
-import { Message, Select, Option, Loading, Pagination} from 'element-ui'
+import { Message, Select, Option, Loading, Pagination, Button} from 'element-ui'
 const element = {
     install: function (Vue) {
         Vue.use(Select)//下拉框
         Vue.use(Option)//下拉框选项
         Vue.use(Pagination)//分页控件
-        
+        Vue.use(Button)//按钮
+
         //Loading
         Vue.prototype.$loading = Loading;
 
