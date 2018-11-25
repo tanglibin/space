@@ -91,15 +91,16 @@ class Journal extends AdminBase
             $data=input('post.');
 
             $where['id'] = $data['id'];
-            $o = Db::name("essay_push")->where($where)->find();
-
-            if(empty($o['issue_time']) && $data['status'] == '2'){
-                $data['issue_time'] = date("Y-m-d H:i:s");
+            if($data['status'] == '2'){
+                $o = Db::name("article_info")->where($where)->find();
+                if(empty($o['issue_time'])){
+                    $data['issue_time'] = date("Y-m-d H:i:s");
+                }
             }
 
             $r=Db::name("article_info")->where($where)->update($data);
             if($r){
-                return true;
+                return $data;
             }else{
                 return $this->error("日志发布状态更新失败！");
             }
@@ -142,8 +143,49 @@ class Journal extends AdminBase
     //修改日志
     public function journalUpdate(){
         if(request()->isPost()){
-            $data=input('post.');
+            $data = input('post.');
+            $detail = isset($data['detail']) ? $data['detail'] : false;
+            $info = isset($data['info']) ? $data['info'] : false;;
 
+            //开启事务
+            Db::startTrans();
+
+            //修改概要
+            if($info){
+                $info = htmlspecialchars_decode( $info );
+                $info = json_decode($info, true);
+                //发布时间
+                if($info['status'] == 2 && empty($info['issue_time'])){
+                    $info = date("Y-m-d H:i:s");
+                }
+                $r = Db::name('article_detail')->update($info);
+                if(!$r){
+                    $this->error('修改失败，请稍后再试！');
+                }
+            }
+
+            //修改详情
+            if($detail){
+                $detail = htmlspecialchars_decode( $detail );
+                $detail = json_decode($detail, true);
+                unset($detail['title']);
+                $r = true;
+
+                //修改章节
+                if(isset($detail['id'])){
+                    $r = Db::name('article_detail')->update($detail);
+                }else {
+                    //新增章节
+                    $r = Db::name('article_detail')->insert($detail,false,true);
+                }
+                if($r){
+                    Db::commit();
+                    return $r;
+                }else{
+                    Db::rollback();
+                    $this->error('修改失败，请稍后再试！');
+                }
+            }
         }
     }
     

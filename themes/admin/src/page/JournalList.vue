@@ -97,7 +97,7 @@ export default {
                         status: targetStatus
                     },
                     success: (result) => {
-                        rowData.status = targetStatus;
+                        Object.assign(rowData, result);
                     }
                 });
             });

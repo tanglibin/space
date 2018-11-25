@@ -89,12 +89,13 @@ class Push extends AdminBase
     public function pushIssueToggle(){
         if(request()->isPost()){
             $data=input('post.');
-
             $where['id'] = $data['id'];
-            $o = Db::name("essay_push")->where($where)->find();
 
-            if(empty($o['issue_time']) && $data['status'] == '2'){
-                $data['issue_time'] = date("Y-m-d H:i:s");
+            if($data['status'] == '2'){
+                $o = Db::name("essay_push")->where($where)->find();
+                if(empty($o['issue_time'])){
+                    $data['issue_time'] = date("Y-m-d H:i:s");
+                }
             }
 
             $r=Db::name("essay_push")->where($where)->update($data);
@@ -147,17 +148,20 @@ class Push extends AdminBase
         if(request()->isPost()){
             $data=input('post.');
             
-            if(strlen($data['issue_time']) != 19){
+            $issue_time = $data['issue_time'];
+            if(strlen($issue_time) != 19){
                 if($data['status'] == '2'){
-                    $data['issue_time'] = date("Y-m-d H:i:s");
+                    $issue_time = date("Y-m-d H:i:s");
+                    $data['issue_time'] = $issue_time;
                 }else{
                     unset($data['issue_time']);
+                    $issue_time = '';
                 }
             }
             unset($data['category_name']);
             $r=Db::name("essay_push")->update($data);
             if($r){
-                return ['issue_time'=>$data['issue_time']];
+                return ['issue_time'=>$issue_time];
             }else{
                 return $this->error("修改失败！");
             }

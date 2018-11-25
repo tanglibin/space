@@ -164,7 +164,8 @@ export default {
                     data: {id: ids},
                     success: (result) => {
                         let pagerObj = this.pager;
-                        if(pagerObj.page == this.lastPage && Math.ceil( (pagerObj.total - rowData.length) / pagerObj.pageSize ) < this.lastPage){
+                        //当前最大页数大于1，且当前页为最后一页， 且当前总数减去删除的数据数量得出的最大页数小于原本最大页数时， 当前页减1
+                        if(this.lastPage > 1 && pagerObj.page == this.lastPage && Math.ceil( (pagerObj.total - rowData.length) / pagerObj.pageSize ) < this.lastPage){
                             this.pager.page -= 1;
                         }
                         this.getList();
@@ -208,8 +209,8 @@ export default {
                 type: 'POST',
                 data: this.formData,
                 success: (result) => {
-                    this.list.unshift(Object.assign(this.formData, result, this.getCateName()));
-                    this.list.pop();
+                    this.list.unshift(Object.assign({}, this.formData, result, this.getCateName()));
+                    this.lastPage > 1 && this.list.pop();
                     this.pager.total ++;
                     //关闭弹框
                     this.isShowDialog = false;

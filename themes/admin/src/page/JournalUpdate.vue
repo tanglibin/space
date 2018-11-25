@@ -136,12 +136,13 @@ export default {
                 url: 'getJournalById.do',
                 data: {id: this.editId},
                 success: (result) => {
-                    this.editData = result;
-                    this.formData = {
-                        info: result.info,
-                        detail: Object.assign({title: 0}, result.detail[0])
-                    }
                     this.chapter_title_list = result.detail;
+                    this.editData = Object.assign({}, result);
+                    this.formData = {info: Object.assign({}, result.info), detail:{}};
+                    //延迟处理，规避富文本总是填充不到值的问题
+                    setTimeout(()=>{
+                        this.formData.detail = Object.assign({title: 0}, result.detail[0]);
+                    }, 100);
                 },
                 error: ()=> {
                     this.$router.go(-1);
@@ -178,7 +179,12 @@ export default {
             //判断当前选中章节有无修改即可
             let detail = editData.detail[formData.detail.title], 
                 curDetail = formData.detail;
-            if(detail.chapter_title != curDetail.chapter_title || detail.content != curDetail.content){
+            
+            //detail 没值则为新增章节
+            if(!detail){
+                delete curDetail.id;
+                param.detail = JSON.stringify(curDetail);
+            }else if(detail.chapter_title != curDetail.chapter_title || detail.content != curDetail.content){
                 param.detail = JSON.stringify(curDetail);
             }
 
@@ -193,7 +199,10 @@ export default {
                 type: 'POST',
                 data: param,
                 success: (result) => {
-                    flg && this.$router.push('/journal');
+                    if(flg){
+                        return this.$router.push('/journal');
+                    }
+                    detail ? Object.assign(detail, curDetail) : editData.detail.push(Object.assign({}, curDetail, {id: result}));
                 }
             });
         },
