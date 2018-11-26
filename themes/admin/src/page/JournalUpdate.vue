@@ -51,7 +51,7 @@
                     <vue-ueditor-wrap v-model="formData.detail.content" :config="myConfig"></vue-ueditor-wrap>
                 </el-form-item>
                 <el-row type="flex" justify="end">
-                    <el-button type="warning" size="medium" @click="deleteChap">删除章节</el-button>
+                    <el-button type="warning" size="medium" @click="deleteChap" v-show="formData.detail.id">删除章节</el-button>
                     <el-button type="primary" size="medium" @click="submit()">保存章节</el-button>
                     <el-button type="primary" size="medium" @click="submit(1)">完成编辑</el-button>
                 </el-row>
@@ -127,6 +127,7 @@ export default {
                 detailData_2 = this.formData.detail,
                 select = detailData_1[val] || {};
             //页面更新填充标题及内容
+            detailData_2.id = select.id || '';
             detailData_2.chapter_title = select.chapter_title || '';
             detailData_2.content = select.content || '';
         },
@@ -179,7 +180,6 @@ export default {
             //判断当前选中章节有无修改即可
             let detail = editData.detail[formData.detail.title], 
                 curDetail = formData.detail;
-            
             //detail 没值则为新增章节
             if(!detail){
                 delete curDetail.id;
@@ -225,7 +225,31 @@ export default {
         },
         /*删除章节*/
         deleteChap(){
-
+            //是否仅剩一章
+            let editData = this.editData,
+                isSingle = editData.detail.length == 1, 
+                msgPix = isSingle ? '日志' : '章节';
+            Common.confirm(`此操作将删除该${msgPix}, 是否继续?`, ()=>{
+                if(isSingle){
+                    Common.sendRequest({
+                        url: 'journalDel.do',
+                        type: 'POST',
+                        data: {id: [editData.info.id]},
+                        success: (result) => {
+                            this.$router.push('/journal');
+                        }
+                    });
+                }else{
+                    Common.sendRequest({
+                        url: 'chapDel.do',
+                        data: {id: this.formData.detail.id},
+                        success: (result) => {
+                            editData.detail.splice(this.formData.detail.title, 1);
+                            this.formData.detail.title = 0;
+                        }
+                    });
+                }
+            });
         },
     },
     mounted() {

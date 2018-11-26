@@ -230,6 +230,16 @@ class Journal extends AdminBase
         }
     }
 
+    //删除章节
+    public function chapDel(){
+        $r = Db::name('article_detail')->where(['id'=>input('get.id')])->delete();
+        if($r){
+            return true;
+        }else{
+            return $this->error("删除失败！");
+        }
+    }
+    
     //获取总数量
     public function getCount(){
         return Db::name('article_info')->count();

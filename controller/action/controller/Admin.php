@@ -119,6 +119,10 @@ class Admin extends Base
     public function getJournalById(){
         $this->success(Journal::getInstance()->getJournalById());
     }
+    //删除章节
+    public function chapDel(){
+        $this->success(Journal::getInstance()->chapDel(), '章节删除成功!');
+    }
     //获取日志总数量
     private function getJournalCount(){
         return Journal::getInstance()->getCount();

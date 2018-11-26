@@ -46,6 +46,7 @@ return [
     'getJournalById$'       => 'action/admin/getJournalById',
     'journalUpdate$'        => 'action/admin/journalUpdate',
     'journalAdd$'           => 'action/admin/journalAdd',
+    'chapDel$'              => 'action/admin/chapDel',
 
     //好文推荐
     'getPushList$'          => 'action/admin/getPushList',
