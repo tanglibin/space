@@ -127,16 +127,18 @@
                         <span class="title-text">资源下载</span>
                     </div>
                     <ul>
-                        <li class="resource-item"><i style="background-image:url(/upload/css.png)"></i><p>css API</p></li>
-                        <li class="resource-item">学习nodejs：express 入门和基础知识</li>
-                        <li class="resource-item">学习nodejs：express 入门和基础知识</li>
-                        <li class="resource-item">学习nodejs：express 入门和基础知识</li>
-                        <li class="resource-item">学习nodejs：express 入门和基础知识</li>
-                        <li class="resource-item">学习nodejs：express 入门和基础知识</li>
-                        <li class="resource-item">学习nodejs：express 入门和基础知识</li>
-                        <li class="resource-item">学习nodejs：express 入门和基础知识</li>
-                        <li class="resource-item">学习nodejs：express 入门和基础知识</li>
-                        <li class="resource-item">学习nodejs：express 入门和基础知识</li>
+                        <li class="resource-item"><i style="background-image: url(/upload/download/css.png"></i><p>CSS API</p></li>
+                        <li class="resource-item"><i style="background-image: url(/upload/download/js.png"></i><p>JS API</p></li>
+                        <li class="resource-item"><i style="background-image: url(/upload/download/jquery.png"></i><p>jQuery API</p></li>
+                        <li class="resource-item"><i style="background-image: url(/upload/download/vscode.png"></i><p>vscode</p></li>
+                        <li class="resource-item"><i style="background-image: url(/upload/download/notepad.png"></i><p>notepad++</p></li>
+                        <li class="resource-item"><i style="background-image: url(/upload/download/jscompress.png"></i><p>JSCompress</p></li>
+                        <li class="resource-item"><i style="background-image: url(/upload/download/pngyu.png"></i><p>Pngyu</p></li>
+                        <li class="resource-item"><i style="background-image: url(/upload/download/caesium.png"></i><p>Caesium</p></li>
+                        <li class="resource-item"><i style="background-image: url(/upload/download/kantu.png"></i><p>看图王</p></li>
+                        <li class="resource-item"><i style="background-image: url(/upload/download/fiddler.png"></i><p>Fiddler</p></li>
+                        <li class="resource-item"><i style="background-image: url(/upload/download/git.png"></i><p>TortoiseGit</p></li>
+                        <li class="resource-item"><i style="background-image: url(/upload/download/appserv.png"></i><p>appserv</p></li>
                     </ul>
                 </section>
             </div>

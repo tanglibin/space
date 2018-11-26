@@ -46,13 +46,20 @@ i[class^='icon-']{
     .rightside{
         &{width: 360px;}
         >section{background: @color3;padding: 0 20px;margin-bottom: 20px;}
+        .box-title{border-bottom-color: @color12;}
     }
     .microcode-box, .news-box{height: 485px;}
     .link-item{line-height: 40px;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;cursor: pointer;}
     .link-item:hover{color: @color5;}
+    .resource-box{
+        &{overflow: hidden;}
+        ul{.size(360px; auto);overflow: hidden;padding: 20px 0;}
+    }
     .resource-item{
-        &{.size(80px);display: inline-block;margin-right: 20px;}
-        i{.size(40px);}
+        &{.size(80px, 110px);float: left;text-align: center;margin: 0 40px 15px 0;cursor: pointer;}
+        i{.size(78px);background-color: @color11;background-repeat: no-repeat;background-position: 50%;border-radius: 4px;border: 1px solid @color12;display: block;margin-bottom: 5px;transition: .15s all ease-in;}
+        &:hover{color: @color5;}
+        &:hover i{background-position-y: 40%;}
     }
 
     .footer{
