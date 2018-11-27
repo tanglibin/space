@@ -111,6 +111,10 @@ export default {
         //监听内容改变，刷新校验结果
         'formData.detail.content'(value){
             !this.contentValid && this.$refs.form.validate('detail.content');
+        },
+        //路由变化时执行
+        '$route'(to, from) {
+            this.ready();
         }
     },
     methods: {
@@ -178,8 +182,8 @@ export default {
             }
 
             //判断当前选中章节有无修改即可
-            let detail = editData.detail[formData.detail.title], 
-                curDetail = formData.detail;
+            let curDetail = formData.detail,
+                detail = editData.detail[curDetail.title];
             //detail 没值则为新增章节
             if(!detail){
                 delete curDetail.id;
@@ -202,7 +206,14 @@ export default {
                     if(flg){
                         return this.$router.push('/journal');
                     }
-                    detail ? Object.assign(detail, curDetail) : editData.detail.push(Object.assign({}, curDetail, {id: result}));
+                    if(detail){
+                        Object.assign(detail, curDetail);
+                    }else{
+                        editData.detail.push(Object.assign({}, curDetail, {id: result}));
+                        this.chapter_title_list = editData.detail;
+                        curDetail.title = editData.detail.length - 1;
+                        this.changeChapTitle(curDetail.title);
+                    }
                 }
             });
         },
@@ -240,25 +251,33 @@ export default {
                         }
                     });
                 }else{
+                    let _detail = this.formData.detail;
                     Common.sendRequest({
                         url: 'chapDel.do',
-                        data: {id: this.formData.detail.id},
+                        data: {id: _detail.id},
                         success: (result) => {
-                            editData.detail.splice(this.formData.detail.title, 1);
-                            this.formData.detail.title = 0;
+                            let index = _detail.title;
+                            editData.detail.splice(index, 1);
+                            this.chapter_title_list = editData.detail;
+                            _detail.title = 0;
+                            this.changeChapTitle(0);
                         }
                     });
                 }
             });
         },
+        /*对应vue mounted钩子*/
+        ready(){
+            //获取标签分类
+            this.getCategory();
+
+            //编辑状态获取数据
+            this.editId = this.$route.params.id;
+            this.editId && this.getDataById();
+        }
     },
     mounted() {
-        //获取标签分类
-        this.getCategory();
-
-        //编辑状态获取数据
-        this.editId = this.$route.params.id;
-        this.editId && this.getDataById();
+        this.ready();
     },
 };
 </script>

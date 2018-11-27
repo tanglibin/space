@@ -134,7 +134,7 @@ class Journal extends AdminBase
         if(!$article){
             return $this->error("非法请求！");
         }
-        $detail = Db::name('article_detail')->where(['info_id' => $id]) -> select();
+        $detail = Db::name('article_detail')->where(['info_id' => $id]) ->order('create_time asc')-> select();
         $response['info'] = $article;
         $response['detail'] = $detail;
         return $response;
@@ -158,7 +158,7 @@ class Journal extends AdminBase
                 if($info['status'] == 2 && empty($info['issue_time'])){
                     $info = date("Y-m-d H:i:s");
                 }
-                $r = Db::name('article_detail')->update($info);
+                $r = Db::name('article_info')->update($info);
                 if(!$r){
                     $this->error('修改失败，请稍后再试！');
                 }
@@ -176,6 +176,7 @@ class Journal extends AdminBase
                     $r = Db::name('article_detail')->update($detail);
                 }else {
                     //新增章节
+                    $detail['create_time'] = date("Y-m-d H:i:s");
                     $r = Db::name('article_detail')->insert($detail,false,true);
                 }
                 if($r){
@@ -219,6 +220,7 @@ class Journal extends AdminBase
 
             //概要id
             $detail['info_id'] = $infoid;
+            $detail['create_time'] = $now;
             $detailid = Db::name('article_detail')->insert($detail,false,true);
             if($detailid){
                 Db::commit();
