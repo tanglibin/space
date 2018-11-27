@@ -24,6 +24,16 @@ i[class^='icon-']{
     .el-select__caret::before{content: "\E619";}
 }
 
+//底部
+.footer{
+    .right-bar{
+        &{position: fixed;right: 20px;top: 60%;}
+        >div{.size(24px, 34px);border-radius: 4px;cursor: pointer;margin-bottom: 10px;padding: 9px 14px;line-height: 18px;}
+        .feedback{font-size: @font1;color: @color3;background-color: @color5;}
+        .to-up{background-color: @color13;font-size: @font7;color: @color14;line-height: 34px;}
+    }
+}
+
 //首页
 .index-cont{
     .main{display: flex;justify-content: space-between;padding-top: 48px;}
@@ -62,7 +72,7 @@ i[class^='icon-']{
         &:hover i{background-position-y: 40%;}
     }
 
-    .footer{
+    .bottomside{
         &{background: @color3;border-top: 1px solid @color10;margin-top: 50px;text-align: center;height: 74px;line-height: 74px;}
         span{margin: 0 8px;}
         .link{cursor: pointer;}

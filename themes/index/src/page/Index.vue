@@ -145,11 +145,11 @@
         </div>
 
         <!-- 底部备案编码 -->
-        <footer class="footer">
+        <article class="bottomside">
             <span>Copyright ©2018 tlbin.com All Rights Reserved.</span>
             <span class="link" @click="openPage('http://www.miitbeian.gov.cn/')">粤ICP备18094587号</span>
-            <span class="link">京公网安备xxxxxx号 <i class="icon-gwab"></i></span>
-        </footer>
+            <!-- <span class="link">京公网安备xxxxxx号 <i class="icon-gwab"></i></span> -->
+        </article>
     </div>
 </template>
 

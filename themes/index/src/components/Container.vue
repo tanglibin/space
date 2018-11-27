@@ -1,13 +1,15 @@
 <template>
     <div class="container">
-        <HeaderBar></HeaderBar>
+        <header-bar></header-bar>
         <router-view/>
+        <footer-bar></footer-bar>
     </div>
 </template>
 
 <script>
 //头部
-import HeaderBar from '@/components/Header'
+import headerBar from '@/components/Header'
+import footerBar from '@/components/Footer'
 
 export default {
     name: "container",
@@ -19,6 +21,6 @@ export default {
     mounted() {
         
     },
-    components: { HeaderBar},
+    components: { headerBar, footerBar},
 };
 </script>
