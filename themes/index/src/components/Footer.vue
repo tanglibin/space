@@ -37,11 +37,11 @@ export default {
             //定时滚动
             interval = setInterval(()=>{
                 _top -= scrollPart;
+                window.scrollTo(0, _top);
                 if(_top <= 0){
                     this.scrollTop = 0;
                     return clearInterval(interval);
                 }
-                window.scrollTo(0, _top);
             }, 1);
         }
     },
